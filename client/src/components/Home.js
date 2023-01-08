@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useState } from 'react'
 import mammoth from 'mammoth/mammoth.browser';
 import './styles.scss'
 
@@ -35,14 +35,13 @@ import FontFamily from '@tiptap/extension-font-family';
 import TextAlign from '@tiptap/extension-text-align'
 
 const Home = () => {
-
   const [editorContent, setEditorContent] = useState("");
 
   const sendData = () => {
     console.log(editorContent);
   }
   const editor = useEditor({
-    extensions: [StarterKit, Document, Paragraph, Text, Bold, Code, TextStyle, Italic, Strike, Subscript, Superscript, Underline, Highlight.configure({ multicolor: true }), Link.configure({ openOnClick: false, }), BulletList, ListItem, Blockquote, Heading.configure({ levels: [1, 2, 3], }), HorizontalRule, Image, Dropcursor, Gapcursor, Table.configure({ resizable: true, }), TableRow, TableHeader, TableCell, OrderedList, FontFamily, TextAlign.configure({ types: ['heading', 'paragraph'] }), Color],
+    extensions: [StarterKit, Document, Paragraph, Text, Bold, Code, TextStyle, Italic, Strike, Subscript, Superscript, Underline, Highlight.configure({ multicolor: true }), Link.configure({ openOnClick: false, }), BulletList, ListItem, Blockquote, Heading.configure({ levels: [1, 2, 3], }), HorizontalRule, Image.configure({ inline: true,allowBase64: true, }), Dropcursor, Gapcursor, Table.configure({ resizable: true, }), TableRow, TableHeader, TableCell, OrderedList, FontFamily, TextAlign.configure({ types: ['heading', 'paragraph'] }), Color],
     onUpdate({ editor }) {
       setEditorContent(editor.getHTML());
     },
@@ -51,6 +50,7 @@ const Home = () => {
         class: "Editor"
       }
     },
+    content: '',
   });
   const setLink = useCallback(() => {
     const previousUrl = editor.getAttributes('link').href
@@ -81,11 +81,26 @@ const Home = () => {
     }
   }, [editor])
 
+  const onButtonClick = useCallback((e) => {
+    if (e.target.files.length > 0) {
+      let filename = URL.createObjectURL(e.target.files[0]);
+      fetch(filename).then(res => res.arrayBuffer()).then(ab =>
+        mammoth.convertToHtml({ arrayBuffer: ab }).then(function (result) {
+          var html = result.value;
+          editor.commands.setContent(html)
+          setEditorContent(html)
+        })
+          .done())
+    }
+
+  }, [editor])
   if (!editor) {
     return null;
   }
   return (
     <div>
+      <div><input type="file" accept='.docx' onChange={onButtonClick} /></div>
+
       <button
         onClick={() => editor.chain().focus().toggleBold().run()}
         className={editor.isActive('bold') ? 'is-active bg-blue-100 border-solid border-2 border-black rounded w-8' : 'hover:bg-gray-100 border-solid border-2 border-black rounded w-8'}
