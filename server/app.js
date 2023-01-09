@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const methodoverride = require('method-override');
 const session = require('express-session');
 const Admin = require('./models/admin');
-
+const drive = require('./routes/drive');
 const MongoDBStore = require('connect-mongo');
 
 const Dburl = process.env.DB_URL
@@ -58,6 +58,8 @@ app.use(passport.session());
 passport.use(new LocalStrategy(Admin.authenticate()))
 passport.serializeUser(Admin.serializeUser());
 passport.deserializeUser(Admin.deserializeUser());
+
+app.use('/drive', drive);
 
 
 
