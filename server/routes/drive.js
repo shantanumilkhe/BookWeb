@@ -1,14 +1,37 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
 
-router.post('/upload', (req, res) => {
+
+var storage = multer.diskStorage({
+
+  destination: function (req, file, cb) {
+
+    cb(null, './documents')
+  },
+
+
+  filename: function (req, file, cb) {
+
+    let filename = 'filenametogive';
+     req.body.file = filename
+
+    cb(null, filename)
+  }
+})
+
+const upload = multer({ storage: storage})
+
+router.post('/upload',upload.single("document"),(req, res) => {
+    console.log(req.file)
     // Check if the request is a multi-part request (i.e. it contains a file)
+    
     if (!req.is('multipart/form-data')) {
       return res.status(400).send({ message: 'Not a multipart request' });
     }
   
     // Parse the file from the request
-    const file = req.files.file;
+    const file = req.file;
     if (!file) {
       return res.status(400).send({ message: 'No file was provided' });
     }

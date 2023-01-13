@@ -11,6 +11,6 @@ const adminSchema = new Schema({
 
 });
 
-userSchema.plugin(passportLocalMongoose);
+adminSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model('Admin', adminSchema);
