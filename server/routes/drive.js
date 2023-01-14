@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-
+const {google} = require('googleapis');
+const fs = require('fs');
+const path = require('path');
 
 var storage = multer.diskStorage({
 
@@ -22,8 +24,11 @@ var storage = multer.diskStorage({
 
 const upload = multer({ storage: storage})
 
+
+
 router.post('/upload',upload.single("document"),(req, res) => {
     console.log(req.file)
+    
     // Check if the request is a multi-part request (i.e. it contains a file)
     
     if (!req.is('multipart/form-data')) {
@@ -32,6 +37,7 @@ router.post('/upload',upload.single("document"),(req, res) => {
   
     // Parse the file from the request
     const file = req.file;
+   
     if (!file) {
       return res.status(400).send({ message: 'No file was provided' });
     }
@@ -50,19 +56,23 @@ router.post('/upload',upload.single("document"),(req, res) => {
     // Create a new drive instance
     const drive = google.drive({ version: 'v3', auth: oAuth2Client });
   
+    //file path for out file
+
     // Create a new file on Google Drive
     drive.files.create({
       resource: {
-        name: file.name,
+        name: file.originalname,
         mimeType: file.mimetype,
-        parents: ['FOLDER_ID'] // optional: put the file in a specific folder
+        // parents: ['FOLDER_ID'] // optional: put the file in a specific folder
       },
       media: {
         mimeType: file.mimetype,
-        body: file.data
-      }
+        body: file.buffer
+      },
+      fields: 'id'
     }, (err, result) => {
       if (err) {
+        console.log(err);
         return res.status(500).send({ message: err.message });
       }
       return res.status(200).send({ message: 'File uploaded successfully', fileId: result.id });
