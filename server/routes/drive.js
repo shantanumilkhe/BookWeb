@@ -83,8 +83,9 @@ router.post('/upload',upload.single("document"),(req, res) => {
     });
   });
 
-  router.get('/:id', (req, res) => {
-    drive.files.get({
+  router.get('/:id',async (req, res) => {
+    console.log(req.params.id);
+    await drive.files.get({
       fileId: req.params.id,
       alt: 'media'
     }, { responseType: 'stream' }, (err, response) => {

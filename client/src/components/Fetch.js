@@ -3,28 +3,11 @@ import { pdfjs, Document, Page } from "react-pdf";
 import { VariableSizeList as List } from "react-window";
 import { asyncMap } from "@wojtekmaj/async-array-utils";
 import { useWindowWidth, useWindowHeight } from "@wojtekmaj/react-hooks";
+import axios from "axios";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
-// const width = 400;
-// const height = width * 1.5;
-
-// function Row({ index, style }) {
-//   function onPageRenderSuccess(page) {
-//     console.log(`Page ${page.pageNumber} rendered`);
-//   }
-
-//   return (
-//     <div style={style}>
-//       <Page
-//         onRenderSuccess={onPageRenderSuccess}
-//         pageIndex={index}
-//       />
-//     </div>
-//   );
-// }
-
-const Viewer = () => {
+const Fetch = () => {
   const windowWidth = useWindowWidth();
   const windowHeight = useWindowHeight();
   const listRef = createRef();
@@ -44,11 +27,7 @@ const Viewer = () => {
 
     setDisplayPage(value);
   }
-  const handleFile = async (e) => {
-    const file = e.target.files[0];
-    let url = URL.createObjectURL(file);
-    setPdfFile(file);
-  };
+
   const goToPage = () =>{
     setPageNumber(displayPage-1);
     listRef.current.scrollToItem(displayPage-1,"center");
@@ -65,6 +44,12 @@ const Viewer = () => {
    * React-Window cannot get item size using async getter, therefore we need to
    * calculate them ahead of time.
    */
+  useEffect(()=>{
+    async function getPDF(){
+        await axios.get("http://localhost:5000/drive/1CJFrkOf2ANsk5GJPfUqEMXiZs9TEDww9").then((res)=>{console.log(res)}).catch((err)=>{console.log(err)});
+    }
+    getPDF();
+  },[])
   useEffect(() => {
     setPageViewports(null);
 
@@ -116,36 +101,10 @@ const Viewer = () => {
     return pageViewport.height;
   }
 
-  const sendFile = async () => {
-    var FormData = require('form-data');
-    var formData = new FormData();
-
-    formData.append("document",pdfFile);
-    // await axios.post('http://localhost:5000/drive/upload', formData).then(res => { console.log(res) });
-    console.log(formData.get("file"));
-    await fetch("http://localhost:5000/drive/upload", {
-        method: 'POST',
-        body: formData,
-        
-    })
-        .then((res) => console.log(res))
-        .catch((err) => ("Error occured", err));
-  }
   return (
     <div>
-      <div>
-        <input
-          type="file"
-          accept="application/pdf"
-          placeholder="insert PDF here"
-          onChange={(e) => handleFile(e)}
-        />
-      </div>
       {renderNavButtons &&
         <div className="buttonc">
-          <div>
-            <button onClick={sendFile}>Upload</button>
-          </div>
           <div>
             <button
               disabled={pageNumber <= 1}
@@ -190,4 +149,4 @@ const Viewer = () => {
   );
 }
 
-export default Viewer
+export default Fetch
