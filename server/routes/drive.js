@@ -67,7 +67,7 @@ router.post('/upload',upload.single("document"),(req, res) => {
       },
       media: {
         mimeType: file.mimetype,
-        body: file.buffer
+        body: fs.createReadStream(file.path)
       },
       fields: 'id'
     }, (err, result) => {
