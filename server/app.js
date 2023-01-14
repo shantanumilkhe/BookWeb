@@ -16,7 +16,7 @@ const drive = require('./routes/drive');
 const MongoDBStore = require('connect-mongo');
 const cors = require('cors');
 const Dburl = process.env.DB_URL
-
+const requests = require('./routes/request');
 
 mongoose.set('strictQuery', true);
 mongoose.connect(Dburl, {
@@ -69,11 +69,15 @@ passport.serializeUser(Admin.serializeUser());
 passport.deserializeUser(Admin.deserializeUser());
 
 
+app.use('/drive', drive);
+app.use('/get', requests)
+
+
 app.listen((5000),()=>{
     console.log('Server running on port: 5000')
 })
 
-app.use('/drive', drive);
+
 
 
 
