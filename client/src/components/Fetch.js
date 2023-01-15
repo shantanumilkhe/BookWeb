@@ -44,12 +44,26 @@ const Fetch = () => {
    * React-Window cannot get item size using async getter, therefore we need to
    * calculate them ahead of time.
    */
-  useEffect(()=>{
-    async function getPDF(){
-        await axios.get("http://localhost:5000/drive/1CJFrkOf2ANsk5GJPfUqEMXiZs9TEDww9").then((res)=>{console.log(res)}).catch((err)=>{console.log(err)});
+  async function getFile() {
+    try {
+        const response = await fetch('http://localhost:5000/drive/1Q_xEHAlxdqkvsSFAz2dqEucZWZLfOKsw', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/octet-stream'
+            },
+            responseType: 'blob'
+        });
+        setPdfFile(response.url)
+        const fileBlob = await response.blob();
+        return fileBlob;
+    } catch (error) {
+        console.error(error);
     }
-    getPDF();
-  },[])
+  }
+  useEffect(() => {
+    getFile();
+  }, [])
+  
   useEffect(() => {
     setPageViewports(null);
 
@@ -103,6 +117,7 @@ const Fetch = () => {
 
   return (
     <div>
+      
       {renderNavButtons &&
         <div className="buttonc">
           <div>

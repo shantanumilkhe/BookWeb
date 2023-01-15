@@ -93,10 +93,10 @@ router.post('/upload',upload.single("document"),(req, res) => {
         console.log(err);
         res.status(500).send(err);
       } else {
-        res.set({
-          'Content-Disposition': `attachment; filename=${response.data.headers['content-disposition'].match(/"(.*)"/)[1]}`,
-          'Content-Type': 'application/pdf'
-        });
+        // res.set({
+        //   'Content-Disposition': `attachment; filename=${response.data.headers['content-disposition'].match(/"(.*)"/)[1]}`,
+        //   'Content-Type': 'application/pdf'
+        // });
         response.data
           .on('end', () => {
             console.log('Done');
