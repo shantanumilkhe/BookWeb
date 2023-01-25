@@ -1,20 +1,23 @@
-import React, { useEffect,useState } from 'react'
-import axios from "axios";
+import React,{useState} from 'react'
+import Chapters from './BookView/Chapters'
+import Viewer from './BookView/Fetch'
 const Display = () => {
-    const [chapters,setChapter] = useState([]);
-    useEffect(() => {
-        async function getChapters() {
-            await axios.get("http://localhost:5000/get/allChapterID").then((res) => 
-            {console.log(res.data.files);setChapter(res.data.files)}).catch(err => console.log(err));
-        }
-        getChapters();
-    }, [])
+    const [val,setVal] = useState(null);
+
+    const handleID = (ID) => {
+        setVal(ID);
+    }
 
     return (
         <div>
-            {chapters.map((chp)=>{
-                return <div>{chp.googleId}</div>
-            })}
+            <div class="row align-items-start">
+                <div class="col">
+                    <Chapters onID={handleID}/>
+                </div>
+                <div class="col">
+                    <Viewer id={val}/>
+                </div>
+            </div>
         </div>
     )
 }

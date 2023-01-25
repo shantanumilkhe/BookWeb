@@ -7,13 +7,12 @@ import axios from "axios";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
-const Fetch = () => {
+const Fetch = (props) => {
   const windowWidth = useWindowWidth();
   const windowHeight = useWindowHeight();
   const listRef = createRef();
   const [pdf, setPdf] = useState(null);
   const [pageViewports, setPageViewports] = useState(null);
-
 
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
@@ -40,13 +39,10 @@ const Fetch = () => {
     changePage(-1);
    }
   const nextPage = () => { changePage(+1); }
-  /**
-   * React-Window cannot get item size using async getter, therefore we need to
-   * calculate them ahead of time.
-   */
-  async function getFile() {
+
+  async function getFile(id) {
     try {
-        const response = await fetch('http://localhost:5000/drive/1Q_xEHAlxdqkvsSFAz2dqEucZWZLfOKsw', {
+        const response = await fetch('http://localhost:5000/drive/'+id, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/octet-stream'
@@ -61,8 +57,8 @@ const Fetch = () => {
     }
   }
   useEffect(() => {
-    getFile();
-  }, [])
+    getFile(props.id);
+  }, [props.id])
   
   useEffect(() => {
     setPageViewports(null);
@@ -117,7 +113,6 @@ const Fetch = () => {
 
   return (
     <div>
-      
       {renderNavButtons &&
         <div className="buttonc">
           <div>
