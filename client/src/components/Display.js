@@ -11,7 +11,7 @@ const Display = () => {
     return (
         <div>
             <div class="row align-items-start">
-                <div class="col">
+                <div class="col-3">
                     <Chapters onID={handleID}/>
                 </div>
                 <div class="col">
