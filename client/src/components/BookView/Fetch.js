@@ -1,9 +1,29 @@
 import React, { useEffect, useState,createRef } from "react";
-
+import 'react-pdf/dist/esm/Page/TextLayer.css'
+import '../../css/viewer.css'
+import { Document, Page } from 'react-pdf';
 const Fetch = (props) => {
   const [pdfFile, setPdfFile] = useState(null);
-  
-  const [urls,setURL] =useState(null);
+  const [numPages, setNumPages] = useState(null);
+  const [pageNumber, setPageNumber] = useState(1);
+
+  function onDocumentLoadSuccess({ numPages }) {
+    setNumPages(numPages);
+    setPageNumber(1);
+  }
+
+  function changePage(offset) {
+    setPageNumber(prevPageNumber => prevPageNumber + offset);
+  }
+
+  function previousPage() {
+    changePage(-1);
+  }
+
+  function nextPage() {
+    changePage(1);
+  }
+
   async function getFile(id) {
     try {
         const response = await fetch('http://localhost:5000/drive/'+id, {
@@ -13,7 +33,6 @@ const Fetch = (props) => {
             },
             responseType: 'blob'
         });
-        setURL(response.url);
         setPdfFile(response.url)
         const fileBlob = await response.blob();
         return fileBlob;
@@ -25,11 +44,45 @@ const Fetch = (props) => {
     getFile(props.id);
   }, [props.id])
   
-  let url = urls+'#toolbar=0'
   return (
     <div>
-      <iframe src={url} frameborder="0" width="100%" height="580px"></iframe> 
-      {/* <iframe src={pdfFile} frameborder="0" width="100%" height="580px"></iframe> */}
+      <div>
+        <p>
+          Page {pageNumber || (numPages ? 1 : '--')} of {numPages || '--'}
+        </p>
+        <button
+          type="button"
+          disabled={pageNumber <= 1}
+          onClick={previousPage}
+        >
+          Previous
+        </button>
+        <button
+          type="button"
+          disabled={pageNumber >= numPages}
+          onClick={nextPage}
+        >
+          Next
+        </button>
+      </div>
+      <div id="ResumeContainer">
+
+      <Document
+        height='508px'
+        width="100%"
+        file={pdfFile}
+        onLoadSuccess={onDocumentLoadSuccess}
+      >
+        <div style={{
+				border: '2px solid lightgray',
+				display: 'flex',
+				height: '100%',
+				borderRadius: '3px',
+			}}>
+        <Page pageNumber={pageNumber} />
+        </div>
+      </Document>
+      </div>
     </div>
   );
 }
