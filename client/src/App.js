@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes,Route } from 'react-router-dom';
-import Viewer from './components/Viewer'
+import Fetch from './components/BookView/Fetch'
 import Home from './components/Home';
 import Navbar from './css/Navbar';
 import Display from './components/Display'
-require ('bootstrap');
+// require ('bootstrap');
 
 function App() {
   return (
@@ -13,8 +13,8 @@ function App() {
     <Navbar/>
     <Routes>
     <Route path="/" element={<Home />} />
-    <Route path="/pdf" element={<Viewer />} />
     <Route path='/book' element={<Display/>}/>
+    <Route path='/viewer/:id' element={<Fetch/>}/>
     </Routes>
     </BrowserRouter>
   );

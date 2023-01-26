@@ -1,8 +1,15 @@
 import React,{useState,useEffect} from 'react'
+import { useNavigate} from 'react-router-dom'
 import axios from 'axios'
 import '../../css/Chapter.css'
-const Chapters = (props) => {
+const Chapters = () => {
+    let navigate = useNavigate();
     const [chapters, setChapter] = useState([]);
+
+    const pageOpen=(id)=>{
+        let path = '/viewer/'+id;
+        navigate(path)
+    }
 
     useEffect(() => {
         async function getChapters() {
@@ -31,7 +38,7 @@ const Chapters = (props) => {
                             <div className="detail-box">
 
                             </div>
-                            <button className="seeMore">See More</button>
+                            <button className="seeMore" onClick={()=>pageOpen(chp.googleId)}>See More</button>
                         </div>
 
                     </div>
