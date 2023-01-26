@@ -10,12 +10,13 @@ const Display = () => {
 
     return (
         <div>
+            <Chapters onID={handleID}/>
             <div class="row align-items-start">
                 <div class="col-3">
-                    <Chapters onID={handleID}/>
+                    
                 </div>
                 <div class="col">
-                    <Viewer id={val}/>
+                    {/* <Viewer id={val}/> */}
                 </div>
             </div>
         </div>
