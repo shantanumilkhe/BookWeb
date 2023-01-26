@@ -1,11 +1,17 @@
-import React from 'react'
+import React from 'react';
+import '../App.css';
+import Cards from '../css/Cards';
+import HeroSection from '../css/HeroSection';
+import Footer from '../css/Footer';
 
-const Home = () => {
+function Home() {
   return (
-    <div>
-      Home
-    </div>
-  )
+    <>
+      <HeroSection />
+      <Cards />
+      <Footer />
+    </>
+  );
 }
 
-export default Home
+export default Home;

@@ -3,7 +3,7 @@ import './App.css';
 import { BrowserRouter, Routes,Route } from 'react-router-dom';
 import Viewer from './components/Viewer'
 import Home from './components/Home';
-import Navbar from './components/Navbar';
+import Navbar from './css/Navbar';
 import Display from './components/Display'
 require ('bootstrap');
 
