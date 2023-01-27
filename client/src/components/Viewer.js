@@ -1,126 +1,20 @@
 import React, { useEffect, useState,createRef } from "react";
-import { pdfjs, Document, Page } from "react-pdf";
-import { VariableSizeList as List } from "react-window";
-import { asyncMap } from "@wojtekmaj/async-array-utils";
-import { useWindowWidth, useWindowHeight } from "@wojtekmaj/react-hooks";
-
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
-
-// const width = 400;
-// const height = width * 1.5;
-
-// function Row({ index, style }) {
-//   function onPageRenderSuccess(page) {
-//     console.log(`Page ${page.pageNumber} rendered`);
-//   }
-
-//   return (
-//     <div style={style}>
-//       <Page
-//         onRenderSuccess={onPageRenderSuccess}
-//         pageIndex={index}
-//       />
-//     </div>
-//   );
-// }
 
 const Viewer = () => {
-  const windowWidth = useWindowWidth();
-  const windowHeight = useWindowHeight();
-  const listRef = createRef();
-  const [pdf, setPdf] = useState(null);
-  const [pageViewports, setPageViewports] = useState(null);
-
-
-  const [numPages, setNumPages] = useState(null);
-  const [pageNumber, setPageNumber] = useState(1);
-  const [renderNavButtons, setRenderNavButtons] = useState(false);
+  const [pdf,setFile] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
-  const [displayPage,setDisplayPage] = useState(null);
-  let name,value;
-  const handleInput = (e) => {
-    name = e.target.name;
-    value = e.target.value;
-
-    setDisplayPage(value);
-  }
   const handleFile = async (e) => {
     const file = e.target.files[0];
     let url = URL.createObjectURL(file);
-    setPdfFile(file);
+    setFile(file);
+    setPdfFile(url);
   };
-  const goToPage = () =>{
-    setPageNumber(displayPage-1);
-    listRef.current.scrollToItem(displayPage-1,"center");
-  }
-  const changePage = (offset) => {
-    setPageNumber(prevPageNumber => prevPageNumber + offset);
-    listRef.current.scrollToItem(pageNumber,"center");
-  }
-  const previousPage = () => { 
-    changePage(-1);
-   }
-  const nextPage = () => { changePage(+1); }
-  /**
-   * React-Window cannot get item size using async getter, therefore we need to
-   * calculate them ahead of time.
-   */
-  useEffect(() => {
-    setPageViewports(null);
-
-    if (!pdf) {
-      return;
-    }
-
-    (async () => {
-      const pageNumbers = Array.from(new Array(pdf.numPages)).map(
-        (_, index) => index + 1
-      );
-
-      const nextPageViewports = await asyncMap(pageNumbers, (pageNumber) =>
-        pdf.getPage(pageNumber).then((page) => page.getViewport({ scale: 1 }))
-      );
-
-      setPageViewports(nextPageViewports);
-    })();
-  }, [pdf]);
-
-  function onDocumentLoadSuccess(nextPdf) {
-    setPdf(nextPdf);
-    setNumPages(nextPdf.numPages);
-    setRenderNavButtons(true);
-  }
-
-  function Row({ index, style }) {
-    function onPageRenderSuccess(page) {
-      console.log(`Page ${page.pageNumber} rendered`);
-    }
-  
-    return (
-      <div style={style}>
-        <Page
-          onRenderSuccess={onPageRenderSuccess}
-          pageIndex={index}
-        />
-      </div>
-    );
-  }
-
-  function getPageHeight(pageIndex) {
-    if (!pageViewports) {
-      throw new Error("getPageHeight() called too early");
-    }
-
-    const pageViewport = pageViewports[pageIndex];
-
-    return pageViewport.height;
-  }
 
   const sendFile = async () => {
     var FormData = require('form-data');
     var formData = new FormData();
 
-    formData.append("document",pdfFile);
+    formData.append("document",pdf);
     // await axios.post('http://localhost:5000/drive/upload', formData).then(res => { console.log(res) });
     console.log(formData.get("file"));
     await fetch("http://localhost:5000/drive/upload", {
@@ -140,52 +34,10 @@ const Viewer = () => {
           placeholder="insert PDF here"
           onChange={(e) => handleFile(e)}
         />
+        <button type='button' onClick={sendFile}>Upload</button>
+        {pdfFile!=null?<div><iframe src={pdfFile} width='100%' height={window.innerHeight}></iframe></div>:null}
       </div>
-      {renderNavButtons &&
-        <div className="buttonc">
-          <div>
-            <button onClick={sendFile}>Upload</button>
-          </div>
-          <div>
-            <button
-              disabled={pageNumber <= 1}
-              onClick={previousPage}
-            >
-              Previous Page
-            </button>
-            {"  "}
-            <button
-              disabled={pageNumber === numPages}
-              onClick={nextPage}
-            >
-              Next Page
-            </button>
-            <input type="number" value={displayPage} onChange={handleInput}/>
-            <button onClick={goToPage}>
-              Go To Page
-            </button>
-          </div>
-        </div>
-      }
 
-
-      <Document
-        file={pdfFile}
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
-        {pdf && pageViewports ? (
-          <List
-            ref={listRef}
-            width={windowWidth}
-            height={windowHeight}
-            estimatedItemSize={getPageHeight(0)}
-            itemCount={pdf.numPages}
-            itemSize={getPageHeight}
-          >
-            {Row}
-          </List>
-        ) : null}
-      </Document>
     </div>
   );
 }

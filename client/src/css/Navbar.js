@@ -60,7 +60,15 @@ function Navbar() {
                 Book
               </Link>
             </li>
-
+            <li className='nav-item'>
+              <Link
+                to='/upload'
+                className='nav-links'
+                onClick={closeMobileMenu}
+              >
+                Upload
+              </Link>
+            </li>
             <li>
               <Link
                 to='/sign-up'

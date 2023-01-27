@@ -6,7 +6,7 @@
 }
 
 .react-pdf__Page{
-    box-shadow: 0 0 8px rgb(0 0 0 / 50%);
+    /* box-shadow: 0 0 8px rgb(0 0 0 / 50%); */
 }
 .pdf-toolbox {
     background-color: #f6f6f6;

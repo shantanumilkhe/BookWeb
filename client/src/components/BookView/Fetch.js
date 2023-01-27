@@ -1,9 +1,12 @@
 import React, { useState, useEffect, createRef } from 'react';
 import { useParams } from 'react-router-dom';
-import { Document, Page } from 'react-pdf';
+import { Document, Page , pdfjs} from 'react-pdf';
 import { FixedSizeList } from 'react-window';
 import '../../css/viewer.css'
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
 const Fetch = (props) => {
+  let h = window.innerHeight;
   let params = useParams(); 
   const listRef = createRef();
   const [numPages, setNumPages] = useState(null);
@@ -29,12 +32,12 @@ const Fetch = (props) => {
     }
   }
   useEffect(() => {
-    getFile(props.id);
-  }, [props.id])
+    getFile();
+  }, [])
 
   const renderPage = ({ index, style }) => {
     return (
-      <div style={style} ><Page key={index + 1} pageNumber={index + 1} renderTextLayer={false} renderAnnotationLayer={false}/></div>
+      <div style={style} ><Page key={index + 1} pageNumber={index + 1} renderTextLayer={false} renderAnnotationLayer={false} scale={1} height={h-20}/></div>
     );
   }
 
@@ -60,9 +63,9 @@ const Fetch = (props) => {
             <div className='pdfArea'>
               <FixedSizeList
                 itemCount={numPages}
-                itemSize={530}
-                height={530}
-                width={window.innerWidth}
+                itemSize={h-16}
+                height={h}
+                width={700}
                 ref={listRef}
                 onItemsRendered={({ visibleStartIndex, visibleStopIndex }) => {
                   setCurrentPage(visibleStartIndex + 1)
