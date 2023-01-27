@@ -1,0 +1,49 @@
+.wrapper{
+    display: flex;
+    height: 100vh;
+    width:100vh;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.accordion{
+    width: 70vw;
+}
+
+.item{
+   
+    background-color: #f0ebe1;
+    margin-bottom: 5px;
+    padding: 10px 20px;
+}
+.title{
+    
+    font-size: 20px;
+    font-weight: 600;
+    color: #203150;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title > h2{
+    display: block;
+}
+
+
+.content{
+    font-size: 14px;
+    font-weight: 400;
+    color: #203150;
+    overflow: hidden;
+    max-height: 0px;
+    transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+}
+
+.content.show{
+    height: auto;
+    max-height: 9999px;
+    transition: all 0.5s cubic-bezier(1,0,1,0);
+}
