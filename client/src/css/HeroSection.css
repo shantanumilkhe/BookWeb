@@ -13,7 +13,7 @@ video {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: left;
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
   object-fit: fill;
 }
@@ -23,12 +23,21 @@ img{
 }
 
 .hero-container > h1 {
+  margin-left:2%;
   color: #fff;
-  font-size: 100px;
+  font-size: 75px;
   margin-top: -100px;
+  display: flex;
+  flex-direction: row;
+ justify-content: left;
+}
+
+.homePage{
+  text-align: left;
 }
 
 .hero-container > p {
+  margin-left:2%;
   margin-top: 8px;
   color: #fff;
   font-size: 32px;
@@ -37,11 +46,12 @@ img{
 }
 
 .hero-btns {
+  margin-left:2%;
   margin-top: 32px;
 }
 
 .hero-btns .btn {
-  margin: 6px;
+  margin: 0px;
 }
 
 .fa-play-circle {
@@ -52,6 +62,10 @@ img{
   .hero-container > h1 {
     font-size: 70px;
     margin-top: -150px;
+    display: flex;
+    flex-direction: row;
+   justify-content: left;
+   margin-left:2%;
   }
 }
 
@@ -59,18 +73,28 @@ img{
   .hero-container > h1 {
     font-size: 50px;
     margin-top: -100px;
+    display: flex;
+    flex-direction: row;
+   justify-content: left;
+   margin-left:2%;
   }
 
   .hero-container > p {
+    margin-left:2%;
     font-size: 30px;
+    display: flex;
+    flex-direction: row;
+    width: 70%;
   }
 
   .btn-mobile {
     display: block;
     text-decoration: none;
+    margin:0%;
   }
 
   .btn {
     width: 100%;
+    margin: 2%;
   }
 }
