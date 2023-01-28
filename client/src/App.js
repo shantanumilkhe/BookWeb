@@ -6,6 +6,7 @@ import Home from './components/Home';
 import Navbar from './css/Navbar';
 import Display from './components/Display'
 import Upload from './components/Viewer'
+import Uploader from './components/uploader'
 // require ('bootstrap');
 
 function App() {
@@ -16,7 +17,8 @@ function App() {
     <Route path="/" element={<Home />} />
     <Route path='/book' element={<Display/>}/>
     <Route path='/viewer/:id' element={<Fetch/>}/>
-    <Route path='/upload' element={<Upload/>}/>
+    <Route path='/upload' element={<Uploader/>}/>
+    {/* <Route path='/uploader' element={<Uploader/>}/> */}
     </Routes>
     </BrowserRouter>
   );

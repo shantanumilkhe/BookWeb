@@ -64,7 +64,7 @@ const Chapters = () => {
 
                             <div className="title">
 
-                                <h2 onClick={() => toogle(idx)}>Chapter-{idx + 1}</h2>
+                                <h2 onClick={() => toogle(idx)}>{idx + 1}</h2>
                                 <h2 onClick={() => toogle(idx)}>ADMINISTRATION</h2>
                                 {/* <button className="seeMore" onClick={() => pageOpen(chp.googleId)}>See More</button> */}
                                 <span onClick={() => toogle(idx)}>{selected == idx ? "-" : "+"}</span>
