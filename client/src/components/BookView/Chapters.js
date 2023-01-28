@@ -7,6 +7,7 @@ const Chapters = () => {
     let navigate = useNavigate();
     const [chapters, setChapter] = useState([]);
     const [selected, setSelected] = useState(null);
+    
 
     const toogle = (id) => {
         if (selected === id) {
@@ -32,13 +33,13 @@ const Chapters = () => {
         // <div className="container">
         //     {chapters.map((chp, idx) => {
         //         // return <div>
-        //         //     <div className="card text-white bg-info mb-3" onClick={()=>props.onID(chp.googleId)}>
-        //         //         <div className="card-header">Chapter {idx + 1}</div>
-        //         //         <div className="card-body">
-        //         //             <h5 className="card-title">{chp.name}</h5>
-        //         //         </div>
-        //         //     </div>
-        //         // </div>
+                //     <div className="card text-white bg-info mb-3" onClick={()=>props.onID(chp.googleId)}>
+                //         <div className="card-header">Chapter {idx + 1}</div>
+                //         <div className="card-body">
+                //             <h5 className="card-title">{chp.name}</h5>
+                //         </div>
+                //     </div>
+                // </div>
         //         return (
 
         //             // <div className="card_item">
@@ -64,45 +65,18 @@ const Chapters = () => {
 
                             <div className="title">
 
-                                <h2 onClick={() => toogle(idx)}>{idx + 1}</h2>
-                                <h2 onClick={() => toogle(idx)}>ADMINISTRATION</h2>
+                                <h2 onClick={() => toogle(idx)}>{chp.chapterNo}</h2>
+                                <h2 onClick={() => toogle(idx)}>{chp.name}</h2>
                                 {/* <button className="seeMore" onClick={() => pageOpen(chp.googleId)}>See More</button> */}
                                 <span onClick={() => toogle(idx)}>{selected == idx ? "-" : "+"}</span>
                             </div>
-                            <div className={selected == idx ? 'content show' : "content"}><button className="seeMore" onClick={()=>pageOpen(chp.googleId)}>Read</button>
-                                1.0
-Short Title, Extent and Commencement
-<br />
-1.1 
-Extent and Jurisdiction
-<br />
-1.2
-Commencement of Regulations
-<br />
-1.3 
-Definitions
-<br />
-1.4
-Applicability of Regulations
-<br />
-1.5 
-Saving
-<br />
-1.6
-Applicability of Other Regulations
-<br />
-1.7 *
-Power to Prescribe the Proformas
-<br />
-1.8
-Power to Decide Charges
-<br />
-1.9
-Meanings as in Acts, Rules & Interpretations
-<br />
-1.10
-Removal of Difficulties
-</div>
+                            <div className={selected == idx ? 'content show' : "content"}><button className="seeMore" onClick={() => pageOpen(chp.googleId)}>Read</button>
+                            {chp.chapterIndex.map((chpIdx, idx) => {
+                                return <div>
+                                    {chpIdx}
+                                </div>
+                            })}
+                            </div>
                         </div>
                     })}
                 </div>

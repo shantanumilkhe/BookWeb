@@ -42,7 +42,13 @@ oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN })
 const drive = google.drive({ version: 'v3', auth: oAuth2Client });
 
 router.post('/upload', upload.single("document"), (req, res) => {
-  console.log(req.file)
+  console.log(req.body)
+  const index = (req.body.index);
+  const newi = index.split('\n');
+  const index1 = [];
+  
+
+
 
   // Check if the request is a multi-part request (i.e. it contains a file)
 
@@ -76,7 +82,9 @@ router.post('/upload', upload.single("document"), (req, res) => {
     } else {
       const newFile = new chapter({
         googleId: result.data.id,
-        name: file.originalname,
+        name: req.body.title,
+        chapterNo: req.body.chapterNO,
+        chapterIndex: newi,
         size: file.size,
         type: file.mimetype,
       });

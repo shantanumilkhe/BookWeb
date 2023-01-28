@@ -1,9 +1,11 @@
 .pdfArea{
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: flex-start;
+    align-items: left;
     background-color: #525659;
     overflow: auto;
+    
 }
 
 .PDFPage{
@@ -12,7 +14,7 @@
 .react-pdf__Page{
   overflow-y: hidden;
   position: relative;
-  box-shadow: 0 0 8px rgb(0 0 0 / 50%);
+  /* box-shadow: 0 0 8px rgb(0 0 0 / 50%); */
 }
 .pdf-toolbox {
     background-color: #f6f6f6;

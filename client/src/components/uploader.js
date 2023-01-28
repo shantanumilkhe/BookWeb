@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../css/uploader.css'
+import Chapters from './BookView/Chapters'
 
 const Uploader = () => {
   const [info, setInfo] = useState({ name: null, index: null })
+  const[index,setIndex] = useState();
   const [pdf,setPDF] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
   const handleFile = async (e) => {
@@ -28,20 +30,28 @@ const Uploader = () => {
     var formData = new FormData();
 
     formData.append("document", pdf);
+    formData.append('chapterNO',info.number);
     formData.append("title", info.name);
-    formData.append('index',info.index);
+    formData.append('index', [info.index]);
 
-    // await fetch("http://localhost:5000/drive/upload", {
-    //   method: 'POST',
-    //   body: formData,
-    // })
-    //   .then((res) => console.log(res))
-    //   .catch((err) => ("Error occured", err));
+
+    await fetch("http://localhost:5000/drive/upload", {
+      method: 'POST',
+      body: formData,
+    })
+      .then((res) => console.log(res))
+      .catch((err) => ("Error occured", err));
 
   }
   return (
     <form className='react-form'>
       <h1>Upload Chapter File</h1>
+
+      <fieldset className='form-group'>
+        <h4>Chapter number</h4>
+
+        <input id='formName' className='form-input' name='number' type='number' value={info.number} required onChange={handleChange} />
+      </fieldset>
 
       <fieldset className='form-group'>
         <h4>Chapter Name:</h4>
@@ -51,8 +61,7 @@ const Uploader = () => {
 
       <fieldset className='form-group'>
         <h4>Chapter Index:</h4>
-
-        <input type='text' id='formMessage' className='form-textarea' name='index' value={info.index} required onChange={handleChange}></input>
+          <textarea type="" id='formMessage' className='form-textarea' name='index' value={info.index} required onChange={handleChange} cols="30" rows="10"></textarea>
       </fieldset>
 
       <div>

@@ -13,7 +13,9 @@ router.get('/allChapterID', (req, res) => {
         return {
             id: file._id,
           googleId: file.googleId,
-          name: file.name
+          name: file.name,
+          chapterNo: file.chapterNo,
+          chapterIndex: file.chapterIndex
         }
       });
       res.status(200).send({ files: filesData });
