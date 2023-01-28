@@ -1,128 +1,77 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../css/uploader.css'
-import Viewer from './Viewer';
-const reactFormContainer = document.querySelector('.react-form-container')
 
-class ReactFormLabel extends React.Component {
- constructor(props) {
-  super(props)
- }
+const Uploader = () => {
+  const [info, setInfo] = useState({ name: null, index: null })
+  const [pdf,setPDF] = useState(null);
+  const [pdfFile, setPdfFile] = useState(null);
+  const handleFile = async (e) => {
+    const file = e.target.files[0];
+    let url = URL.createObjectURL(file);
+    setPDF(file);
+    setPdfFile(url);
+  };
 
- render() {
-  return(
-   <label htmlFor={this.props.htmlFor}>{this.props.title}</label>
-  )
- }
-}
+  let name, value;
 
-class ReactForm extends React.Component {
- constructor(props) {
-  super(props)
-
-  this.state = {
-   name: '',
-   email: '',
-   subject: '',
-   message: ''
+  const handleChange = (e) => {
+    name = e.target.name;
+    value = e.target.value;
+    setInfo({ ...info, [name]: value })
   }
 
-  this.handleChange = this.handleChange.bind(this)
-  this.handleSubmit = this.handleSubmit.bind(this)
- }
 
- handleChange = (e) => {
-  let newState = {}
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    var FormData = require('form-data');
+    var formData = new FormData();
 
-  newState[e.target.name] = e.target.value
+    formData.append("document", pdf);
+    formData.append("title", info.name);
+    formData.append('index',info.index);
 
-  this.setState(newState)
- }
+    // await fetch("http://localhost:5000/drive/upload", {
+    //   method: 'POST',
+    //   body: formData,
+    // })
+    //   .then((res) => console.log(res))
+    //   .catch((err) => ("Error occured", err));
 
-
- handleSubmit = (e, message) => {
-  e.preventDefault()
-
-  let formData = {
-   formSender: this.state.name,
-   formEmail: this.state.email,
-   formSubject: this.state.subject,
-   formMessage: this.state.message
   }
+  return (
+    <form className='react-form'>
+      <h1>Upload Chapter File</h1>
 
-  if (formData.formSender.length < 1 || formData.formEmail.length < 1 || formData.formSubject.length < 1 || formData.formMessage.length < 1) {
-   return false
-  }
+      <fieldset className='form-group'>
+        <h4>Chapter Name:</h4>
 
-//   $.ajax({
-//    url: '/some/url',
-//    dataType: 'json',
-//    type: 'POST',
-//    data: formData,
-//    success: function(data) {
-//     if (confirm('Thank you for your message. Can I erase the form?')) {
-//       this.setState({
-//        firstName: '',
-//        lastName: '',
-//        email: '',
-//        subject: '',
-//        message: ''
-//       })
-//     }
-//    },
-//    error: function(xhr, status, err) {
-//     console.error(status, err.toString())
-//     alert('There was some problem with sending your message.')
-//    }
-//   })
+        <input id='formName' className='form-input' name='name' type='text' value={info.name} required onChange={handleChange} />
+      </fieldset>
 
-//   this.setState({
-//    firstName: '',
-//    lastName: '',
-//    email: '',
-//    subject: '',
-//    message: ''
-//   })
- }
+      <fieldset className='form-group'>
+        <h4>Chapter Index:</h4>
 
- render() {
-  return(
-   <form className='react-form' onSubmit={this.handleSubmit}>
-    <h1>Upload Chapter File</h1>
+        <input type='text' id='formMessage' className='form-textarea' name='index' value={info.index} required onChange={handleChange}></input>
+      </fieldset>
 
-    <fieldset className='form-group'>
-     <ReactFormLabel htmlFor='formName' title='Chapter Name:' />
+      <div>
+        <input
+          type="file"
+          accept="application/pdf"
+          placeholder="insert PDF here"
+          onChange={(e) => handleFile(e)}
+        />
+        {pdfFile != null ? <div><iframe src={pdfFile} width='100%' height={window.innerHeight}></iframe></div> : null}
+      </div>
 
-     <input id='formName' className='form-input' name='name' type='text' required onChange={this.handleChange} value={this.state.name} />
-    </fieldset>
-
-    {/* <fieldset className='form-group'>
-     <ReactFormLabel htmlFor='formEmail' title='Email:' />
-
-     <input id='formEmail' className='form-input' name='email' type='email' required onChange={this.handleChange} value={this.state.email} />
-    </fieldset> */}
-
-    {/* <fieldset className='form-group'>
-     <ReactFormLabel htmlFor='formSubject' title='Assunto:'/>
-
-     <input id='formSubject' className='form-input' name='subject' type='text' required onChange={this.handleChange} value={this.state.subject} />
-    </fieldset> */}
-
-    <fieldset className='form-group'>
-     <ReactFormLabel htmlFor='formMessage' title='Chapter Index:' />
-
-     <textarea id='formMessage' className='form-textarea' name='message' required onChange={this.handleChange}></textarea>
-    </fieldset>
-
-    <Viewer></Viewer>
-
-    <div className='form-group'>
-     <input id='formButton' className='btn' type='submit' placeholder='Send message' />
-    </div>
-   </form>
+      <div className='form-group'>
+        <input id='formButton' className='btn' type='submit' placeholder='Send message' onClick={handleSubmit} />
+      </div>
+    </form>
 
   )
- }
+
 }
 
-export default ReactForm;
+export default Uploader;
