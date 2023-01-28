@@ -63,12 +63,14 @@ const Chapters = () => {
                         return <div className="item">
 
                             <div className="title">
-                                <h2>Chapter-{idx + 1}</h2>
-                                <h2>ADMINISTRATION</h2>
+
+                                <h2 onClick={() => toogle(idx)}>Chapter-{idx + 1}</h2>
+                                <h2 onClick={() => toogle(idx)}>ADMINISTRATION</h2>
                                 {/* <button className="seeMore" onClick={() => pageOpen(chp.googleId)}>See More</button> */}
-                                <span onClick={() => toogle(idx)}>{selected == idx ? '-' : "+"}</span>
+                                <span onClick={() => toogle(idx)}>{selected == idx ? "-" : "+"}</span>
                             </div>
-                            <div className={selected == idx ? 'content show' : "content"}>1.0
+                            <div className={selected == idx ? 'content show' : "content"}><button className="seeMore" onClick={()=>pageOpen(chp.googleId)}>Read</button>
+                                1.0
 Short Title, Extent and Commencement
 <br />
 1.1 

@@ -92,15 +92,19 @@ body {
 
 .seeMore {
 	margin: 10px auto;
-	width: 100px;
-	height: 35px;
-	background: hsl(245, 44%, 65%);
-	color: #fff;
+	display: block;
+	justify-content: center;
+	width: 80px;
+	height: 25px;
+	background: hsl(52, 91%, 77%);
+	color: rgb(0, 0, 0);
 	border: none;
-	border-radius: 10px;
+	border-radius: 5px;
+	font-size: 16px;
 	font-weight: 600;
 	cursor: pointer;
 	box-shadow: 0 10px 10px hsl(225, 100%, 94%);
+	
 }
 
 @media screen and (max-width: 1024px) {
