@@ -22,6 +22,17 @@ router.get('/allChapterID', (req, res) => {
     });
   });
 
+router.delete('/deleteChapter/:id',(req,res)=>{
+    Chapter.findByIdAndRemove(req.params.id,(err,doc)=>{
+        if(!err){
+            res.send(doc);
+        }
+        else{
+            console.log('Error in Deleting Chapter : '+JSON.stringify(err,undefined,2));
+        }
+    });
+})  
+
  
   
 
