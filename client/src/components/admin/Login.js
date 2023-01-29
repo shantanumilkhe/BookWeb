@@ -8,7 +8,7 @@ const Login = () => {
   let name, value;
 
   const submitInfo = async () => {
-    await axios.post('/auth/login', info).then(res => {setMessage(res.data.message);localStorage.setItem('token',res.data.token);if(res.data.success==true){navigate('/upload')}}).catch(err => {setMessage(err.response.data.message);});
+    await axios.post('/auth/login', info).then(res => {setMessage(res.data.message);localStorage.setItem('token',res.data.token);if(res.data.success==true){navigate('/admin/dashboard')}}).catch(err => {setMessage(err.response.data.message);});
   }
 
   const handleInput = (e) => {

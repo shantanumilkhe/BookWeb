@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../../css/Chapter.css'
 import '../../css/bookIndex.css'
-const Chapters = () => {
+const Book = () => {
     let navigate = useNavigate();
     const [chapters, setChapter] = useState([]);
     const [selected, setSelected] = useState(null);
@@ -16,7 +16,7 @@ const Chapters = () => {
         setSelected(id);
     }
     const pageOpen = (id) => {
-        let path = '/viewer/' + id;
+        let path = '/admin/editbook/' + id;
         navigate(path)
     }
 
@@ -27,9 +27,16 @@ const Chapters = () => {
         getChapters();
     }, [])
 
-
-
-    return (
+  return (
+    <div>
+        <div className='row'>
+            <div className="card col" onClick={()=>navigate('/admin/newbook')}>
+                <img className="card-img-top" src="..." alt="Card image cap"/>
+                    <div className="card-body">
+                        <p className="card-text">New Chapter</p>
+                    </div>
+            </div>
+        </div>
         <div className="container">
             <div className="wrapper">
                 <div className="accordion ">
@@ -42,7 +49,7 @@ const Chapters = () => {
                                 <h2 onClick={() => toogle(idx)}>{chp.name}</h2>
                                 <span onClick={() => toogle(idx)}>{selected == idx ? "-" : "+"}</span>
                             </div>
-                            <div className={selected == idx ? 'content show' : "content"}><button className="seeMore" onClick={() => pageOpen(chp.googleId)}>Read</button>
+                            <div className={selected == idx ? 'content show' : "content"}><button className="seeMore" onClick={() => pageOpen(chp.id)}>Read</button>
                             {chp.chapterIndex.map((chpIdx, idx) => {
                                 return <div>
                                     {chpIdx}
@@ -54,7 +61,8 @@ const Chapters = () => {
                 </div>
             </div>
         </div>
-    )
+    </div>
+  )
 }
 
-export default Chapters
+export default Book

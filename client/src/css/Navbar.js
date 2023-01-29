@@ -70,9 +70,9 @@ function Navbar() {
                 <div className='nav-item'>
                   <div
                     className='nav-links'
-                    onClick={() => { setClick(false); navigate('/upload'); }}
+                    onClick={() => { setClick(false); navigate('/admin/dashboard'); }}
                   >
-                    Upload
+                    Dashboard
                   </div>
                 </div>
                 <div className='nav-item'>

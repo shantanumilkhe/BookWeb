@@ -138,6 +138,7 @@ import { useParams } from 'react-router-dom'
 import { Viewer, Worker } from '@react-pdf-viewer/core';
 import { pageNavigationPlugin } from '@react-pdf-viewer/page-navigation';
 import { zoomPlugin } from '@react-pdf-viewer/zoom';
+import packageJson from '../../../package.json';
 import '@react-pdf-viewer/zoom/lib/styles/index.css';
 import '@react-pdf-viewer/core/lib/styles/index.css';
 import '@react-pdf-viewer/page-navigation/lib/styles/index.css';
@@ -217,7 +218,7 @@ const Fetch = () => {
             overflow: 'hidden',
           }}
         >
-          <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.2.146/build/pdf.worker.min.js">
+          <Worker workerUrl={`https://unpkg.com/pdfjs-dist@${packageJson.dependencies['pdfjs-dist'].replace(/^\^/, '')}/build/pdf.worker.min.js`}>
             <Viewer theme='dark' fileUrl={pdfFile} plugins={[pageNavigationPluginInstance,zoomPluginInstance]} />;
           </Worker>
         </div>
