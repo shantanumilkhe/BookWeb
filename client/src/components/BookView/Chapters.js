@@ -22,7 +22,7 @@ const Chapters = () => {
 
     useEffect(() => {
         async function getChapters() {
-            await axios.get("http://localhost:5000/get/allChapterID").then((res) => { console.log(res.data.files); setChapter(res.data.files) }).catch(err => console.log(err));
+            await axios.get("https://bookweb.onrender.com/get/allChapterID").then((res) => { console.log(res.data.files); setChapter(res.data.files) }).catch(err => console.log(err));
         }
         getChapters();
     }, [])
@@ -59,7 +59,7 @@ const Chapters = () => {
         // </div>
         <div className="container">
             <div className="wrapper">
-                <div className="accordion">
+                <div className="accordion ">
                     {chapters.map((chp, idx) => {
                         return <div className="item">
 

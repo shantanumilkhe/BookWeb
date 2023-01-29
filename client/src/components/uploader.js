@@ -35,7 +35,7 @@ const Uploader = () => {
     formData.append('index', [info.index]);
 
 
-    await fetch("http://localhost:5000/drive/upload", {
+    await fetch("https://bookweb.onrender.com/drive/upload", {
       method: 'POST',
       body: formData,
     })
