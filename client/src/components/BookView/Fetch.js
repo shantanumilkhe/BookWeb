@@ -30,7 +30,7 @@ const Fetch = () => {
 
   async function getFile() {
     try {
-      const response = await fetch('http://localhost:5000/drive/' + params.id, {
+      const response = await fetch('https://bookweb.onrender.com/drive/' + params.id, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/octet-stream'
