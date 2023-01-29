@@ -188,6 +188,7 @@ const Fetch = () => {
             display: 'flex',
             justifyContent: 'center',
             padding: '4px',
+            zIndex:'1',
           }}
         >
           <div style={{ padding: '0px 2px' }}>

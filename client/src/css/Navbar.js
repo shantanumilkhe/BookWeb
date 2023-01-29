@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from './Button';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 function Navbar() {
+  let navigate = useNavigate();
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
@@ -28,54 +29,50 @@ function Navbar() {
     <>
       <nav className='navbar'>
         <div className='navbar-container'>
-          <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
+          <div className='navbar-logo' onClick={()=>{setClick(false);navigate('/');}}>
           Maha TPC
             <i class='fab fa-typo3' />
-          </Link>
-          <div className='menu-icon' onClick={handleClick}>
+          </div>
+          <div className='menu-icon' onClick={()=>setClick(!click)}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
           </div>
           <ul className={click ? 'nav-menu active' : 'nav-menu'}>
             <li className='nav-item'>
-              <Link to='/' className='nav-links' onClick={closeMobileMenu}>
+              <div className='nav-links' onClick={()=>{setClick(false);navigate('/');}}>
                 Home
-              </Link>
+              </div>
             </li>
             <li className='nav-item'>
-              <Link
-                to='/services'
+              <div
                 className='nav-links'
-                onClick={closeMobileMenu}
+                onClick={()=>{setClick(false);navigate('/services');}}
               >
                 Services
-              </Link>
+              </div>
             </li>
             <li className='nav-item'>
-              <Link
-                to='/book'
+              <div
                 className='nav-links'
-                onClick={closeMobileMenu}
+                onClick={()=>{setClick(false);navigate('/book');}}
               >
                 Book
-              </Link>
+              </div>
             </li>
             <li className='nav-item'>
-              <Link
-                to='/upload'
+              <div
                 className='nav-links'
-                onClick={closeMobileMenu}
+                onClick={()=>{setClick(false);navigate('/upload');}}
               >
                 Upload
-              </Link>
+              </div>
             </li>
             <li>
-              <Link
-                to='/sign-up'
+              <div
                 className='nav-links-mobile'
-                onClick={closeMobileMenu}
+                onClick={()=>{setClick(false);navigate('/signup');}}
               >
                 Sign Up
-              </Link>
+              </div>
             </li>
           </ul>
           {/* {button && <Button buttonStyle='btn--outline'>SIGN UP</Button>} */}

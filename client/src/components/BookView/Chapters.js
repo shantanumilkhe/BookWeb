@@ -22,7 +22,7 @@ const Chapters = () => {
 
     useEffect(() => {
         async function getChapters() {
-            await axios.get("https://bookweb.onrender.com/get/allChapterID").then((res) => { console.log(res.data.files); setChapter(res.data.files) }).catch(err => console.log(err));
+            await axios.get("/get/allChapterID").then((res) => { console.log(res.data.files); setChapter(res.data.files) }).catch(err => console.log(err));
         }
         getChapters();
     }, [])
