@@ -29,12 +29,12 @@ const Book = () => {
 
   return (
     <div>
-        <div className='row'>
-            <div className="card col" onClick={()=>navigate('/admin/newbook')}>
-                <img className="card-img-top" src="..." alt="Card image cap"/>
-                    <div className="card-body">
-                        <p className="card-text">New Chapter</p>
-                    </div>
+        <div className='container'>
+            <div className="btn" onClick={()=>navigate('/admin/newbook')}>
+
+                  
+                        <p className="card-text">Upload a New Chapter</p>
+                    
             </div>
         </div>
         <div className="container">
@@ -43,13 +43,13 @@ const Book = () => {
                     {chapters.map((chp, idx) => {
                         return <div className="item">
 
-                            <div className="title">
+                            <div className="title" onClick={() => pageOpen(chp.id)}>
 
                                 <h2 onClick={() => toogle(idx)}>{chp.chapterNo}</h2>
                                 <h2 onClick={() => toogle(idx)}>{chp.name}</h2>
-                                <span onClick={() => toogle(idx)}>{selected == idx ? "-" : "+"}</span>
+                                <span onClick={() => toogle(idx)}>Update</span>
                             </div>
-                            <div className={selected == idx ? 'content show' : "content"}><button className="seeMore" onClick={() => pageOpen(chp.id)}>Read</button>
+                            <div className={selected == idx ? 'content show' : "content"}><button className="seeMore" >Update this Chapter</button>
                             {chp.chapterIndex.map((chpIdx, idx) => {
                                 return <div>
                                     {chpIdx}

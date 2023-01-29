@@ -57,7 +57,7 @@ const BookEdit = () => {
   
   return (
     <form className='react-form'>
-      <h1>Upload Chapter File</h1>
+      <h1>Update Chapter File</h1>
 
       <fieldset className='form-group'>
         <h4>Chapter number</h4>
@@ -87,8 +87,8 @@ const BookEdit = () => {
       </div>
 
       <div className='form-group row'>
-        <input id='formButton' className='btn col' type='submit' placeholder='Send message' onClick={handleSubmit} />
-        <input id='formButton' className='btn col' type='delete' placeholder='Delete' onClick={handleDelete} />
+        <input id='formButton' className='btn col' type='submit' value={"Update"} placeholder='Send message' onClick={handleSubmit} />
+        <input id='formButton' className='btn col' type='submit' value={"Delete"} placeholder='Delete' onClick={handleDelete} />
       </div>
     </form>
 

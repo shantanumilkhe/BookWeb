@@ -63,12 +63,12 @@ function Footer() {
       <section class='social-media'>
         <div class='social-media-wrap'>
           <div class='footer-logo'>
-            <Link to='/' className='social-logo'>
-              TRVL
+            <Link to='/admin/login' className='social-logo'>
+              Maha TP Consultant
               <i class='fab fa-typo3' />
             </Link>
           </div>
-          <small class='website-rights'>TRVL © 2020</small>
+          <small class='website-rights'>MahaTPC © 2023</small>
           <div class='social-icons'>
             <Link
               class='social-icon-link facebook'
