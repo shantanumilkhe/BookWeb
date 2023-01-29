@@ -33,7 +33,25 @@ router.delete('/deleteChapter/:id',(req,res)=>{
     });
 })  
 
- 
+router.put('/updateChapter/:id',(req,res)=>{
+    if(!req.body){
+        return res.status(400).send('Request body is missing');
+    }
+    Chapter.findByIdAndUpdate(req.params.id,{
+        name: req.body.name,
+        chapterNo: req.body.chapterNo,
+        chapterIndex: req.body.chapterIndex
+    },{new:true},(err,doc)=>{
+        if(!err){
+            res.redirect('/book');
+        }
+        else{
+            console.log('Error in Updating Chapter : '+JSON.stringify(err,undefined,2));
+        }
+    });
+})
+
+
   
 
   module.exports = router;

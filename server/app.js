@@ -14,6 +14,7 @@ const session = require('express-session');
 const Admin = require('./models/admin');
 const drive = require('./routes/drive');
 const auth = require('./routes/auth');
+const gr = require('./routes/gr');
 const MongoDBStore = require('connect-mongo');
 const cors = require('cors');
 const Dburl = process.env.DB_URL
@@ -79,6 +80,7 @@ passport.deserializeUser(Admin.deserializeUser());
 app.use('/drive', drive);
 app.use('/get', requests)
 app.use('/auth', auth)
+app.use('/gr', gr)
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
