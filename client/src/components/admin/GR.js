@@ -22,7 +22,7 @@ const GR = () => {
 
     useEffect(() => {
         async function getChapters() {
-            await axios.get("/get/allChapterID").then((res) => { console.log(res.data.files); setChapter(res.data.files) }).catch(err => console.log(err));
+            await axios.get("/gr/allgrID").then((res) => { console.log(res.data.files); setChapter(res.data.files) }).catch(err => console.log(err));
         }
         getChapters();
     }, [])

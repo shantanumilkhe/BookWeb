@@ -7,7 +7,7 @@ video {
 }
 
 .hero-container {
-  background: url('../../public/images/img-home.jpg') center center/cover no-repeat;
+  background: url('../../public/images/home2.jpg') center center/cover no-repeat;
   height: 100vh;
   width: 100%;
   display: flex;
@@ -29,6 +29,7 @@ img{
   margin-top: -100px;
   display: flex;
   flex-direction: row;
+  text-shadow: 1px 1px 2px black;
  justify-content: left;
 }
 

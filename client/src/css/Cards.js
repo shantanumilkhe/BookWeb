@@ -5,19 +5,19 @@ import CardItem from './CardItem';
 function Cards() {
   return (
     <div className='cards'>
-      <h1>services</h1>
+      <h1>Services</h1>
       <div className='cards__container'>
         <div className='cards__wrapper'>
           <ul className='cards__items'>
             <CardItem
               src='images/2.png'
-              text=''
+              text='UDPCR Book all chapters'
               label='Book'
               path='/book'
             />
             <CardItem
               src='images/1.png'
-              text='Travel through the Islands of Bali in a Private Cruise'
+              text='Government Rules, Regulations and Acts'
               label='GR'
               path='/services'
             />
@@ -25,14 +25,14 @@ function Cards() {
           <ul className='cards__items'>
             <CardItem
               src='images/3.png'
-              text='Set Sail in the Atlantic Ocean visiting Uncharted Waters'
-              label='Mystery'
+              text='Get consultion from our experts. We are here to help you'
+              label='Services'
               path='/services'
             />
             <CardItem
-              src='images/img-4.jpg'
-              text='Experience Football on Top of the Himilayan Mountains'
-              label='Adventure'
+              src='images/interview.jpg'
+              text='Mock Interviews and Interview Tips'
+              label='Interview'
               path='/products'
             />
             

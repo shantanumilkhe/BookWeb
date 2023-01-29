@@ -45,11 +45,12 @@ const BookEdit = () => {
 
   }
   const handleDelete = async ()=>{
-    await axios.delete('/',id).then(res=>console.log(res)).catch(err=>console.log(err))
+    console.log(id)
+    await axios.delete('/get/deleteChapter/'+id.id).then(res=>console.log(res)).catch(err=>console.log(err))
   }
   useEffect(() => {
     async function getDetails(){
-        await axios.get('/',id).then(res=>console.log(res)).catch(err=>console.log(err))
+        await axios.get('/get/updateChapter/'+id.id).then(res=>console.log(res)).catch(err=>console.log(err))
     }
     getDetails();
   }, [])

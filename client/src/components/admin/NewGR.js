@@ -31,7 +31,7 @@ const Uploader = () => {
     formData.append("title", info.name);
 
 
-    await fetch("/drive/upload", {
+    await fetch("/gr/upload", {
       method: 'POST',
       body: formData,
     })

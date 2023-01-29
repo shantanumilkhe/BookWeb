@@ -12,6 +12,7 @@ import Book from './components/admin/Book';
 import BookEdit from './components/admin/BookEdit';
 import GR from './components/admin/GR';
 import GREdit from './components/admin/GREdit';
+import NewGR from './components/admin/NewGR';
 
 function App() {
   return (
@@ -28,6 +29,8 @@ function App() {
     <Route path='/admin/editbook/:id' element={<BookEdit/>}/>
     <Route path='/admin/editgr/:id' element={<GREdit/>}/>
     <Route path='/admin/gr' element={<GR/>}/>
+    <Route path='/admin/newgr' element={<NewGR />}/>
+
     </Routes>
     </BrowserRouter>
   );
