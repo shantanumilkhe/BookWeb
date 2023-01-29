@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import '../css/uploader.css'
-import Chapters from './BookView/Chapters'
+import '../../css/uploader.css'
 
 const Uploader = () => {
   const [info, setInfo] = useState({ name: null, index: null })

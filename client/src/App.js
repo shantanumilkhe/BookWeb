@@ -5,7 +5,7 @@ import Fetch from './components/BookView/Fetch'
 import Home from './components/Home';
 import Navbar from './css/Navbar';
 import Display from './components/Display'
-import Uploader from './components/Uploader'
+import Uploader from './components/admin/Uploader'
 import Login from './components/Login'
 // require ('bootstrap');
 
