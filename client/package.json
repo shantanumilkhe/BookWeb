@@ -18,7 +18,7 @@
     "bootstrap": "^5.2.3",
     "form-data": "^4.0.0",
     "jquery": "^3.6.3",
-    "pdfjs-dist": "^3.2.146",
+    "pdfjs-dist": "^3.3.122",
     "react-dom": "^18.2.0",
     "react-pdf": "^6.2.2",
     "react-redux": "^8.0.5",
