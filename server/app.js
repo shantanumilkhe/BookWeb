@@ -17,6 +17,7 @@ const MongoDBStore = require('connect-mongo');
 const cors = require('cors');
 const Dburl = process.env.DB_URL
 const requests = require('./routes/request');
+const bodyParser = require('body-parser');
 
 mongoose.set('strictQuery', true);
 mongoose.connect(Dburl, {
@@ -33,6 +34,11 @@ db.once("open", () => {
 
 const app = express();
 app.use(cors());
+app.use('/static', express.static('static'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "..", "client", "build")));
+
 const secret = 'thisASecret';
 const store = new MongoDBStore({
     mongoUrl: Dburl,
@@ -72,6 +78,9 @@ passport.deserializeUser(Admin.deserializeUser());
 app.use('/drive', drive);
 app.use('/get', requests)
 
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
+})
 
 app.listen((5000),()=>{
     console.log('Server running on port: 5000')

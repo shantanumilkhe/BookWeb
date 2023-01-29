@@ -17,7 +17,7 @@ const Viewer = () => {
     formData.append("document",pdf);
     // await axios.post('http://localhost:5000/drive/upload', formData).then(res => { console.log(res) });
     console.log(formData.get("file"));
-    await fetch("https://bookweb.onrender.com/drive/upload", {
+    await fetch("/drive/upload", {
         method: 'POST',
         body: formData,
         
