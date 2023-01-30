@@ -5,7 +5,8 @@ import '../../css/uploader.css'
 
 const BookEdit = () => {
     let id = useParams();
-  const [info, setInfo] = useState({ name: null, index: null })
+    const[message,setMessage]= useState(null);
+  const [info, setInfo] = useState({ name: null, number: null })
   const[index,setIndex] = useState();
   const [pdf,setPDF] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
@@ -30,50 +31,76 @@ const BookEdit = () => {
     var FormData = require('form-data');
     var formData = new FormData();
 
-    formData.append("document", pdf);
+    // formData.append("document", pdf);
     formData.append('chapterNO',info.number);
     formData.append("title", info.name);
     formData.append('index', [info.index]);
 
 
-    // await fetch("/drive/upload", {
-    //   method: 'POST',
-    //   body: formData,
-    // })
-    //   .then((res) => console.log(res))
-    //   .catch((err) => ("Error occured", err));
+    await fetch("/get/updateChapter/"+id.id, {
+      method: 'PUT',
+      body: formData,
+    })
+    .then((res) => setMessage('Success'))
+    .catch((err) => (setMessage(err.message)));
 
   }
   const handleDelete = async ()=>{
     console.log(id)
-    await axios.delete('/get/deleteChapter/'+id.id).then(res=>console.log(res)).catch(err=>console.log(err))
+    await axios.delete('/get/deleteChapter/'+id.id)
+    .then((res) => setMessage('Success'))
+    .catch((err) => (setMessage(err.message)));
   }
   useEffect(() => {
+    async function getFile(_id) {
+      try {
+        const response = await fetch('/drive/' + _id, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/octet-stream'
+          },
+          responseType: 'blob'
+        });
+        setPdfFile(response.url)
+        const fileBlob = await response.blob();
+        return fileBlob;
+      } catch (error) {
+        console.error(error);
+      }
+    }
     async function getDetails(){
-        await axios.get('/get/updateChapter/'+id.id).then(res=>console.log(res)).catch(err=>console.log(err))
+        await axios.get('/get/ChapterData/'+id.id).then(res=>{
+          setIndex(res.data.chapterIndex);
+          setInfo({name:res.data.name,number:res.data.chapterNo});
+          getFile(res.data.googleId);
+        }).catch(err=>console.log(err))
     }
     getDetails();
   }, [])
   
   return (
+    <div>
+      {message == null ? null : <div class="alert alert-warning" role="alert">
+        {message}
+      </div>}
     <form className='react-form'>
       <h1>Update Chapter File</h1>
 
       <fieldset className='form-group'>
         <h4>Chapter number</h4>
 
-        <input id='formName' className='form-input' name='number' type='number' value={info.number} required onChange={handleChange} />
+        <input id='formName' className='form-input' name='number' type='number' defaultValue={info.number} required onChange={handleChange} />
       </fieldset>
 
       <fieldset className='form-group'>
         <h4>Chapter Name:</h4>
 
-        <input id='formName' className='form-input' name='name' type='text' value={info.name} required onChange={handleChange} />
+        <input id='formName' className='form-input' name='name' type='text' defaultValue={info.name} required onChange={handleChange} />
       </fieldset>
 
       <fieldset className='form-group'>
         <h4>Chapter Index:</h4>
-          <textarea type="" id='formMessage' className='form-textarea' name='index' value={info.index} required onChange={handleChange} cols="30" rows="10"></textarea>
+          <textarea type="" id='formMessage' className='form-textarea' name='index' defaultValue={index} required onChange={handleChange} cols="30" rows="10"></textarea>
       </fieldset>
 
       <div>
@@ -87,11 +114,11 @@ const BookEdit = () => {
       </div>
 
       <div className='form-group row'>
-        <input id='formButton' className='btn col' type='submit' value={"Update"} placeholder='Send message' onClick={handleSubmit} />
+        <input id='formButton' className='btn col' type='submit'  value={"Update"} placeholder='Send message' onClick={handleSubmit} />
         <input id='formButton' className='btn col' type='submit' value={"Delete"} placeholder='Delete' onClick={handleDelete} />
       </div>
     </form>
-
+    </div>
   )
 
 }

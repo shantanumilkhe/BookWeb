@@ -8,6 +8,7 @@ const GREdit = () => {
   const [info, setInfo] = useState({ name: null, number: null })
   const [pdf,setPDF] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
+  const [message,setMessage] = useState(null);
   const handleFile = async (e) => {
     const file = e.target.files[0];
     let url = URL.createObjectURL(file);
@@ -34,16 +35,18 @@ const GREdit = () => {
     formData.append("title", info.name);
 
 
-    // await fetch("/drive/upload", {
-    //   method: 'POST',
-    //   body: formData,
-    // })
-    //   .then((res) => console.log(res))
-    //   .catch((err) => ("Error occured", err));
+    await fetch('', {
+      method: 'POST',
+      body: formData,
+    })
+    .then((res) => setMessage('Success'))
+    .catch((err) => (setMessage(err.message)));
 
   }
   const handleDelete = async ()=>{
-    await axios.delete('/',id).then(res=>console.log(res)).catch(err=>console.log(err))
+    await axios.delete('/',id)
+    .then((res) => setMessage('Success'))
+    .catch((err) => (setMessage(err.message)));
   }
   useEffect(() => {
     async function getDetails(){
@@ -53,6 +56,10 @@ const GREdit = () => {
   }, [])
   
   return (
+    <div>
+      {message == null ? null : <div class="alert alert-warning" role="alert">
+        {message}
+      </div>}
     <form className='react-form'>
       <h1>Upload GR File</h1>
 
@@ -83,7 +90,7 @@ const GREdit = () => {
         <input id='formButton' className='btn col' type='delete' placeholder='Delete' onClick={handleDelete} />
       </div>
     </form>
-
+    </div>
   )
 
 }

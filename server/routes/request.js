@@ -22,11 +22,20 @@ router.get('/allChapterID', (req, res) => {
     });
   });
 
+  router.get('/ChapterData/:id',async (req, res) => {
+    try {
+       let chpt= await  Chapter.findOne({_id:req.params.id});
+       res.status(200).send(chpt);
+    } catch (error) {
+        console.log(error);
+    }
+  });
+
 router.delete('/deleteChapter/:id',(req,res)=>{
     console.log(req.params.id);
     Chapter.findByIdAndRemove(req.params.id,(err,doc)=>{
         if(!err){
-            res.redirect('/book');
+            res.status(200)
             // res.send(doc);
         }
         else{
