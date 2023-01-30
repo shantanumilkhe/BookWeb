@@ -46,9 +46,6 @@ router.post('/upload', upload.single("document"), (req, res) => {
   const index = (req.body.index);
   const newi = index.split('\n');
   const index1 = [];
-  
-
-
 
   // Check if the request is a multi-part request (i.e. it contains a file)
 
@@ -90,8 +87,9 @@ router.post('/upload', upload.single("document"), (req, res) => {
       });
       // save the new file object to the database
       newFile.save()
+
     }
-    return res.status(200).send({ message: 'File uploaded successfully', fileId: result.id });
+    return res.status(200).send(result.data.id);
   });
 });
 
@@ -117,5 +115,74 @@ router.get('/:id', async (req, res) => {
   });
 
 });
+
+
+
+router.post('/updateChapter/:id', upload.single("document"), async (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
+
+  const index = (req.body.index);
+  const newi = index.split('\n');
+
+  let googleId = req.body.googleId;
+  const name = req.body.title;
+  const chapterNo = req.body.chapterNO;
+  const chapterIndex = newi;
+
+  // Check if the request is a multi-part request (i.e. it contains a file)
+
+  if (!req.is('multipart/form-data')) {
+    return res.status(400).send({ message: 'Not a multipart request' });
+  }
+
+  // Parse the file from the request
+  const file = req.file;
+
+  if (file) {
+    // Create a new file on Google Drive
+    await new Promise((resolve, reject) => {
+      drive.files.create({
+        resource: {
+          name: file.originalname,
+          mimeType: file.mimetype,
+          //parents: ['Chapters'] // optional: put the file in a specific folder
+        },
+        media: {
+          mimeType: file.mimetype,
+          body: fs.createReadStream(file.path)
+        },
+        fields: 'id'
+      }, (err, result) => {
+        if (err) {
+          reject(err);
+        } else {
+          googleId = result.data.id;
+          resolve();
+        }
+      });
+    });
+  }
+
+
+  // if (!req.body) {
+  //     return res.status(400).send('Request body is missing');
+  // }
+  chapter.findByIdAndUpdate(req.params.id, {
+    name: name,
+    chapterNo: chapterNo,
+    chapterIndex: chapterIndex,
+    googleId: googleId
+  }, { new: true }, (err, doc) => {
+    if (!err) {
+      res.redirect('/book');
+    }
+    else {
+      console.log('Error in Updating Chapter : ' + JSON.stringify(err, undefined, 2));
+    }
+  });
+
+
+})
 
 module.exports = router;

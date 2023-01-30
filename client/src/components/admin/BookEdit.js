@@ -4,11 +4,12 @@ import { useParams } from 'react-router-dom'
 import '../../css/uploader.css'
 
 const BookEdit = () => {
-    let id = useParams();
-    const[message,setMessage]= useState(null);
+  let id = useParams();
+  const [message, setMessage] = useState(null);
   const [info, setInfo] = useState({ name: null, number: null })
-  const[index,setIndex] = useState();
-  const [pdf,setPDF] = useState(null);
+  const [index, setIndex] = useState();
+  const [pdf, setPDF] = useState(null);
+  const [gid, setgid] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
   const handleFile = async (e) => {
     const file = e.target.files[0];
@@ -25,99 +26,84 @@ const BookEdit = () => {
     setInfo({ ...info, [name]: value })
   }
 
-
   const handleSubmit = async (e) => {
     e.preventDefault()
     var FormData = require('form-data');
     var formData = new FormData();
 
-    // formData.append("document", pdf);
-    formData.append('chapterNO',info.number);
+    formData.append("document", pdf);
+    formData.append('chapterNO', info.number);
     formData.append("title", info.name);
     formData.append('index', [info.index]);
+    formData.append('googleId', gid);
 
 
-    await fetch("/get/updateChapter/"+id.id, {
-      method: 'PUT',
+    await fetch("/drive/updateChapter/" + id.id, {
+      method: 'POST',
       body: formData,
     })
-    .then((res) => setMessage('Success'))
-    .catch((err) => (setMessage(err.message)));
-
+      .then((res) => setMessage('Success'))
+      .catch((err) => (setMessage(err.message)));
   }
-  const handleDelete = async ()=>{
+
+  const handleDelete = async () => {
     console.log(id)
-    await axios.delete('/get/deleteChapter/'+id.id)
-    .then((res) => setMessage('Success'))
-    .catch((err) => (setMessage(err.message)));
+    await axios.delete('/get/deleteChapter/' + id.id)
+      .then((res) => setMessage('Success'))
+      .catch((err) => (setMessage(err.message)));
   }
   useEffect(() => {
-    async function getFile(_id) {
-      try {
-        const response = await fetch('/drive/' + _id, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/octet-stream'
-          },
-          responseType: 'blob'
-        });
-        setPdfFile(response.url)
-        const fileBlob = await response.blob();
-        return fileBlob;
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    async function getDetails(){
-        await axios.get('/get/ChapterData/'+id.id).then(res=>{
-          setIndex(res.data.chapterIndex);
-          setInfo({name:res.data.name,number:res.data.chapterNo});
-          getFile(res.data.googleId);
-        }).catch(err=>console.log(err))
+  
+    async function getDetails() {
+      await axios.get('/get/ChapterData/' + id.id).then(res => {
+        setIndex(res.data.chapterIndex);
+        setInfo({ name: res.data.name, number: res.data.chapterNo });
+        setgid(res.data.googleId);
+      }).catch(err => console.log(err))
     }
     getDetails();
   }, [])
-  
+
   return (
     <div>
       {message == null ? null : <div class="alert alert-warning" role="alert">
         {message}
       </div>}
-    <form className='react-form'>
-      <h1>Update Chapter File</h1>
+      <form className='react-form'>
+        <h1>Update Chapter File</h1>
 
-      <fieldset className='form-group'>
-        <h4>Chapter number</h4>
+        <fieldset className='form-group'>
+          <h4>Chapter number</h4>
 
-        <input id='formName' className='form-input' name='number' type='number' defaultValue={info.number} required onChange={handleChange} />
-      </fieldset>
+          <input id='formName' className='form-input' name='number' type='number' defaultValue={info.number} required onChange={handleChange} />
+        </fieldset>
 
-      <fieldset className='form-group'>
-        <h4>Chapter Name:</h4>
+        <fieldset className='form-group'>
+          <h4>Chapter Name:</h4>
 
-        <input id='formName' className='form-input' name='name' type='text' defaultValue={info.name} required onChange={handleChange} />
-      </fieldset>
+          <input id='formName' className='form-input' name='name' type='text' defaultValue={info.name} required onChange={handleChange} />
+        </fieldset>
 
-      <fieldset className='form-group'>
-        <h4>Chapter Index:</h4>
+        <fieldset className='form-group'>
+          <h4>Chapter Index:</h4>
           <textarea type="" id='formMessage' className='form-textarea' name='index' defaultValue={index} required onChange={handleChange} cols="30" rows="10"></textarea>
-      </fieldset>
+        </fieldset>
 
-      <div>
-        <input
-          type="file"
-          accept="application/pdf"
-          placeholder="insert PDF here"
-          onChange={(e) => handleFile(e)}
-        />
-        {pdfFile != null ? <div><iframe src={pdfFile} width='100%' height={window.innerHeight}></iframe></div> : null}
-      </div>
+        <div>
+          <input
+            type="file"
+            accept="application/pdf"
+            placeholder="insert PDF here"
+            onChange={(e) => handleFile(e)}
+          />
+          {pdfFile != null ? <div><iframe src={pdfFile} width='100%' height={window.innerHeight}></iframe></div> : null}
+        </div>
 
-      <div className='form-group row'>
-        <input id='formButton' className='btn col' type='submit'  value={"Update"} placeholder='Send message' onClick={handleSubmit} />
-        <input id='formButton' className='btn col' type='submit' value={"Delete"} placeholder='Delete' onClick={handleDelete} />
-      </div>
-    </form>
+        <div className='form-group row'>
+          <input id='formButton' className='btn col' type='submit' value={"Update"} placeholder='Send message' onClick={handleSubmit} />
+          <input id='formButton' className='btn col' type='text' value={"Delete"} placeholder='Delete' onClick={handleDelete} />
+        </div>
+      </form>
     </div>
   )
 

@@ -35,7 +35,7 @@ const Dashboard = () => {
               src='/images/1.png'
               text='update your GR with the latest changes'
               label='GR'
-              path='/admin/services'
+              path='/admin/gr'
             />
           </ul>
         </div>

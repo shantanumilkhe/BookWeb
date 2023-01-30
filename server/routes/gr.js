@@ -112,5 +112,27 @@ router.get('/allgrID', (req, res) => {
     });
   
   });
+
+  router.delete('/deletegr/:id', (req, res) => {
+    gr.findByIdAndRemove(req.params.id, (err, file) => {
+      if (err) return res.status(500).send({ error: err });
+      drive.files.delete({ fileId: file.googleId }, (err, result) => {
+        if (err) return res.status(500).send({ error: err });
+        res.status(200).send({ message: 'File deleted successfully' });
+      });
+    });
+  });
+
+  router.put('/updategr/:id', (req, res) => {
+    gr.findByIdAndUpdate(req.params.id, { name: req.body.name }, (err, file) => {
+      if (err) return res.status(500).send({ error: err });
+      drive.files.update({ fileId: file.googleId, resource: { name: req.body.name } }, (err, result) => {
+        if (err) return res.status(500).send({ error: err });
+        res.status(200).send({ message: 'File updated successfully' });
+      });
+    });
+  });
+
+
   
   module.exports = router;
