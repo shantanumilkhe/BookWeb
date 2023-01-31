@@ -19,6 +19,9 @@ const Chapters = () => {
         let path = '/viewer/' + id;
         navigate(path)
     }
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
 
     useEffect(() => {
         async function getChapters() {
@@ -26,14 +29,16 @@ const Chapters = () => {
         }
         getChapters();
     }, [])
-
+    const sortedChapters = chapters.sort((a, b) => {
+        return a.chapterNo - b.chapterNo;
+      });
 
 
     return (
         <div className="container">
             <div className="wrapper">
                 <div className="accordion ">
-                    {chapters.map((chp, idx) => {
+                    {sortedChapters.map((chp, idx) => {
                         return <div className="item">
 
                             <div className="title">

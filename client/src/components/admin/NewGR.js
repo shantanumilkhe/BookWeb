@@ -28,7 +28,6 @@ const Uploader = () => {
     var formData = new FormData();
 
     formData.append("document", pdf);
-    formData.append('chapterNO',info.number);
     formData.append("title", info.name);
 
 
@@ -48,11 +47,6 @@ const Uploader = () => {
     <form className='react-form'>
       <h1>Upload GR File</h1>
 
-      <fieldset className='form-group'>
-        <h4>GR number</h4>
-
-        <input id='formName' className='form-input' name='number' type='number' value={info.number} required onChange={handleChange} />
-      </fieldset>
 
       <fieldset className='form-group'>
         <h4>GR Name:</h4>

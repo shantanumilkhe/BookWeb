@@ -19,7 +19,7 @@ function Cards() {
               src='images/1.png'
               text='Government Rules, Regulations and Acts'
               label='GR'
-              path='/services'
+              path='/gr'
             />
           </ul>
           <ul className='cards__items'>

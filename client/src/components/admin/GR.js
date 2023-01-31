@@ -6,15 +6,6 @@ import '../../css/bookIndex.css'
 const GR = () => {
     let navigate = useNavigate();
     const [chapters, setChapter] = useState([]);
-    const [selected, setSelected] = useState(null);
-
-
-    const toogle = (id) => {
-        if (selected === id) {
-            return setSelected(null);
-        }
-        setSelected(id);
-    }
     const pageOpen = (id) => {
         let path = '/admin/editgr/' + id;
         navigate(path)
@@ -29,14 +20,14 @@ const GR = () => {
 
     return (
         <div>
-            <div className='row'>
-                <div className="card col" onClick={() => navigate('/admin/newgr')}>
-                    <img className="card-img-top" src="..." alt="Card image cap" />
-                    <div className="card-body">
-                        <p className="card-text">New GR</p>
-                    </div>
-                </div>
+           <div className='container'>
+            <div className="btn" onClick={()=>navigate('/admin/newgr')}>
+
+                  
+                        <p className="card-text">Upload a New GR</p>
+                    
             </div>
+        </div>
             <div className="container">
                 <div className="wrapper">
                     <div className="accordion ">
@@ -47,7 +38,7 @@ const GR = () => {
                                     <h2 >{chp.name}</h2>
                                     <button className="seeMore" onClick={() => pageOpen(chp.id)}>Update GR</button>
                                 </div>
-                                
+
                             </div>
                         })}
                     </div>
