@@ -37,7 +37,7 @@ function Navbar() {
       <nav className='navbar'>
         <div className='navbar-container'>
           <div className='navbar-logo' onClick={() => { setClick(false); navigate('/'); }}>
-            Maha TPC
+            MTPC
             <i class='fab fa-typo3' />
           </div>
           <div className='menu-icon' onClick={() => setClick(!click)}>
