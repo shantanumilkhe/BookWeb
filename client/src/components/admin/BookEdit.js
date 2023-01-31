@@ -6,8 +6,7 @@ import '../../css/uploader.css'
 const BookEdit = () => {
   let id = useParams();
   const [message, setMessage] = useState(null);
-  const [info, setInfo] = useState({ name: null, number: null })
-  const [index, setIndex] = useState();
+  const [info, setInfo] = useState({ name: null,number:null, index: null })
   const [pdf, setPDF] = useState(null);
   const [gid, setgid] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
@@ -56,8 +55,7 @@ const BookEdit = () => {
   
     async function getDetails() {
       await axios.get('/get/ChapterData/' + id.id).then(res => {
-        setIndex(res.data.chapterIndex);
-        setInfo({ name: res.data.name, number: res.data.chapterNo });
+        setInfo({ name: res.data.name, number: res.data.chapterNo,index:res.data.chapterIndex });
         setgid(res.data.googleId);
       }).catch(err => console.log(err))
     }
@@ -86,7 +84,7 @@ const BookEdit = () => {
 
         <fieldset className='form-group'>
           <h4>Chapter Index:</h4>
-          <textarea type="" id='formMessage' className='form-textarea' name='index' defaultValue={index} required onChange={handleChange} cols="30" rows="10"></textarea>
+          <textarea type="" id='formMessage' className='form-textarea' name='index' defaultValue={info.index} required onChange={handleChange} cols="30" rows="10"></textarea>
         </fieldset>
 
         <div>

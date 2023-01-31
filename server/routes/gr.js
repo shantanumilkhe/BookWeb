@@ -90,8 +90,16 @@ router.get('/allgrID', (req, res) => {
     });
   });
 
+router.get('/getGRData/:id',async (req,res)=>{
+  try {
+    let GR = await gr.findOne({_id:req.params.id});
+    res.status(200).send(GR);
+  } catch (error) {
+    console.log(error);
+  }
+})
+
   router.get('/:id', async (req, res) => {
-    console.log(req.params.id);
     drive.files.get({
       fileId: req.params.id,
       alt: 'media'

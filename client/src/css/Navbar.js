@@ -65,6 +65,14 @@ function Navbar() {
                 Book
               </div>
             </div>
+            <div className='nav-item'>
+              <div
+                className='nav-links'
+                onClick={() => { setClick(false); navigate('/gr'); }}
+              >
+                GR
+              </div>
+            </div>
             {!admin ? null :
                 <>
                 <div className='nav-item'>

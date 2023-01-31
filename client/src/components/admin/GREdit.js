@@ -9,6 +9,7 @@ const GREdit = () => {
   const [pdf,setPDF] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
   const [message,setMessage] = useState(null);
+  const [gid, setgid] = useState(null);
   const handleFile = async (e) => {
     const file = e.target.files[0];
     let url = URL.createObjectURL(file);
@@ -35,7 +36,7 @@ const GREdit = () => {
     formData.append("title", info.name);
 
 
-    await fetch('', {
+    await fetch('/'+id.id, {
       method: 'POST',
       body: formData,
     })
@@ -43,14 +44,20 @@ const GREdit = () => {
     .catch((err) => (setMessage(err.message)));
 
   }
+
   const handleDelete = async ()=>{
-    await axios.delete('/',id)
+    await axios.delete('/gr/deletegr/'+id.id)
     .then((res) => setMessage('Success'))
     .catch((err) => (setMessage(err.message)));
   }
+
   useEffect(() => {
     async function getDetails(){
-        await axios.get('/',id).then(res=>console.log(res)).catch(err=>console.log(err))
+        await axios.get('/gr/getGRData/'+id.id).then(res=>{
+          console.log(res.data)
+          setInfo({name:res.data.name,number:res.data.number});
+          setgid(res.data.googleId);
+        }).catch(err=>console.log(err))
     }
     getDetails();
   }, [])
@@ -66,13 +73,13 @@ const GREdit = () => {
       <fieldset className='form-group'>
         <h4>GR number</h4>
 
-        <input id='formName' className='form-input' name='number' type='number' value={info.number} required onChange={handleChange} />
+        <input id='formName' className='form-input' name='number' type='number' defaultValue={info.number} required onChange={handleChange} />
       </fieldset>
 
       <fieldset className='form-group'>
         <h4>GR Name:</h4>
 
-        <input id='formName' className='form-input' name='name' type='text' value={info.name} required onChange={handleChange} />
+        <input id='formName' className='form-input' name='name' type='text' defaultValue={info.name} required onChange={handleChange} />
       </fieldset>
 
       <div>

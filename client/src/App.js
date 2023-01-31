@@ -13,6 +13,7 @@ import BookEdit from './components/admin/BookEdit';
 import GR from './components/admin/GR';
 import GREdit from './components/admin/GREdit';
 import NewGR from './components/admin/NewGR';
+import GRList from './components/BookView/GRList'
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
     <Route path='/admin/editgr/:id' element={<GREdit/>}/>
     <Route path='/admin/gr' element={<GR/>}/>
     <Route path='/admin/newgr' element={<NewGR />}/>
-
+    <Route path='/gr' element={<GRList />}/>
     </Routes>
     </BrowserRouter>
   );

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import '../../css/uploader.css'
 
 const Uploader = () => {
-  const [info, setInfo] = useState({ name: null, index: null })
-  const[index,setIndex] = useState();
+  const [info, setInfo] = useState({ name: null,number:null, index: null })
   const [pdf,setPDF] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
   const [message,setMessage] = useState(null);
