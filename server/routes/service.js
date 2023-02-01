@@ -32,7 +32,7 @@ router.post('/addservice', upload.array('images'), async (req, res) => {
             name: req.body.name,
             description: req.body.description,
             serviceNo: req.body.serviceNo,
-            images: req.files.map(f => ({ url: f.path, filename: f.filename }))
+            images: { url: req.files.path, filename: req.filename }
         })
         await newService.save();
         res.status(200).send(newService);
@@ -54,9 +54,7 @@ router.delete('/deleteservice/:id', async (req, res) => {
     try {
         const { id } = req.params;
         const svc = await service.findById(id);
-        for (let img of svc.images) {
-            await cloudinary.uploader.destroy(img.filename);
-        }
+        await cloudinary.uploader.destroy(svc.images.filename);
         await svc.remove();
         res.status(200).send(svc);
     } catch (error) {
@@ -68,14 +66,12 @@ router.put('/updateservice/:id', upload.array('images'), async (req, res) => {
     try {
         const { id } = req.params;
         const svc = await service.findById(id);
-        for (let img of svc.images) {
-            await cloudinary.uploader.destroy(img.filename);
-        }
-        const newImages = req.files.map(f => ({ url: f.path, filename: f.filename }))
+        await cloudinary.uploader.destroy(svc.images.filename);
+        
         svc.name = req.body.name;
         svc.description = req.body.description;
         svc.serviceNo = req.body.serviceNo;
-        svc.images.push(...newImages);
+        svc.images ={ url: req.files.path, filename: req.filename }
         await svc.save();
         res.status(200).send(svc);
     } catch (error) {

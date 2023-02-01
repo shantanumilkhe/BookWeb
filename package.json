@@ -9,7 +9,6 @@
         "start": "npm start -prefix server"
     },
     "dependencies": {
-        "cloudinary": "^1.33.0",
-        "multer-storage-cloudinary": "^4.0.0"
+      
     }
 }
