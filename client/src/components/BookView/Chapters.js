@@ -40,7 +40,6 @@ const Chapters = () => {
                 <div className="accordion ">
                     {sortedChapters.map((chp, idx) => {
                         return <div className="item">
-
                             <div className="title">
 
                                 <h2 onClick={() => toogle(idx)}>{chp.chapterNo}</h2>

@@ -47,12 +47,10 @@ const GRList = () => {
               }).map((chp, idx) => {
                 return <tr>
                   <td data-label="Name"  onClick={() => pageOpen(chp.googleId)}>{chp.name}</td>
-
                 </tr>
               })}
 
-              <tr>
-              </tr>
+              
             </tbody>
           </table>
 

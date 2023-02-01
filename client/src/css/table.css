@@ -19,13 +19,19 @@ table {
     border: 1px solid #ddd;
     padding: .35em;
     font-size: 25px;
+   
+   
   }
   
+tr:nth-child(odd) {
+    background-color: #dedac4;
+}
   table th,
   table td {
     padding: .625em;
     text-align: left;
     cursor: pointer;
+    
   }
   
   table th {
@@ -64,7 +70,7 @@ table {
       border-bottom: 1px solid #ddd;
       display: block;
       font-size: .8em;
-      text-align: right;
+      text-align: left;
     }
     
     
