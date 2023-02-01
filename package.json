@@ -7,5 +7,9 @@
         "install-server": "cd server && npm install && cd .. ",
         "render-postbuild": "npm run install-client && npm run install-server",
         "start": "npm start -prefix server"
+    },
+    "dependencies": {
+        "cloudinary": "^1.33.0",
+        "multer-storage-cloudinary": "^4.0.0"
     }
 }

@@ -15,6 +15,7 @@ const Admin = require('./models/admin');
 const drive = require('./routes/drive');
 const auth = require('./routes/auth');
 const gr = require('./routes/gr');
+const service = require('./routes/service');
 const MongoDBStore = require('connect-mongo');
 const cors = require('cors');
 const Dburl = process.env.DB_URL
@@ -81,6 +82,7 @@ app.use('/drive', drive);
 app.use('/get', requests)
 app.use('/auth', auth)
 app.use('/gr', gr)
+app.use('/sr', service)
 
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
