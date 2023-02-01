@@ -37,6 +37,12 @@ const Dashboard = () => {
               label='GR'
               path='/admin/gr'
             />
+            <CardItem
+              src='/images/1.png'
+              text='Services'
+              label='SERVICES'
+              path='/admin/services'
+            />
           </ul>
         </div>
       </div>

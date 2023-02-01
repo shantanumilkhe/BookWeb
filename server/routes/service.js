@@ -52,7 +52,7 @@ router.get('/serviceData/:id', async (req, res) => {
 
 router.delete('/deleteservice/:id', async (req, res) => {
     try {
-        const { id } = req.params;
+        const id = req.params.id;
         const svc = await service.findById(id);
         await cloudinary.uploader.destroy(svc.images.filename);
         await svc.remove();
@@ -64,7 +64,9 @@ router.delete('/deleteservice/:id', async (req, res) => {
 
 router.put('/updateservice/:id', upload.array('images'), async (req, res) => {
     try {
-        const { id } = req.params;
+        console.log(req.body);
+        console.log(req.params.id);
+        const id  = req.params.id;
         const svc = await service.findById(id);
         await cloudinary.uploader.destroy(svc.images.filename);
         

@@ -14,8 +14,10 @@ import GR from './components/admin/GR';
 import GREdit from './components/admin/GREdit';
 import NewGR from './components/admin/NewGR';
 import GRList from './components/BookView/GRList'
-import Blog from './pages/Blog';
-import Service  from './pages/Home';
+import Service from './components/admin/Services'
+import ServiceEdit from './components/admin/ServicesEdit'
+import NewService from './components/admin/NewServices'
+import ServicesList from './components/ServicesList';
 
 function App() {
   return (
@@ -34,8 +36,10 @@ function App() {
     <Route path='/admin/gr' element={<GR/>}/>
     <Route path='/admin/newgr' element={<NewGR />}/>
     <Route path='/gr' element={<GRList />}/>
-    <Route path='/services' element={<Service/>} />
-        <Route path='/blog/:id' element={<Blog/>} />
+    <Route path='/admin/services' element={<Service/>} />
+    <Route path='/admin/newservice' element={<NewService/>} />
+    <Route path='/admin/editservice/:id' element={<ServiceEdit/>} />
+    <Route path='/services' element={<ServicesList/>} />
     </Routes>
     </BrowserRouter>
   );
