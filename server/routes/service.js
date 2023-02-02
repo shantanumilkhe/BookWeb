@@ -12,27 +12,27 @@ router.get('/allservices', (req, res) => {
     service.find({}, (err, files) => {
         if (err) return res.status(500).send({ error: err });
         const filesData = files.map(file => {
+            
             return {
                 id: file._id,
                 name: file.name,
                 description: file.description,
-                serviceNo: file.serviceNo,
-                images: file.images
+                images: file.images.url
             }
         });
+       console.log(filesData);
         res.status(200).send({ files: filesData });
     });
 })
 
 const upload = multer({ storage });
 
-router.post('/addservice', upload.array('images'), async (req, res) => {
+router.post('/addservice', upload.any('images'), async (req, res) => {
     try {
         const newService = new service({
             name: req.body.name,
             description: req.body.description,
-            serviceNo: req.body.serviceNo,
-            images: { url: req.files.path, filename: req.filename }
+            images: { url: req.files[0].path, filename: req.files[0].filename }
         })
         await newService.save();
         res.status(200).send(newService);
@@ -64,16 +64,14 @@ router.delete('/deleteservice/:id', async (req, res) => {
 
 router.put('/updateservice/:id', upload.array('images'), async (req, res) => {
     try {
-        console.log(req.body);
-        console.log(req.params.id);
-        const id  = req.params.id;
+        const id = req.params.id;
         const svc = await service.findById(id);
-        await cloudinary.uploader.destroy(svc.images.filename);
-        
+        if (req.files.length > 0) {
+            await cloudinary.uploader.destroy(svc.images.filename);
+            svc.images = { url: req.files[0].path, filename: req.files[0].filename }
+        }
         svc.name = req.body.name;
         svc.description = req.body.description;
-        svc.serviceNo = req.body.serviceNo;
-        svc.images ={ url: req.files.path, filename: req.filename }
         await svc.save();
         res.status(200).send(svc);
     } catch (error) {

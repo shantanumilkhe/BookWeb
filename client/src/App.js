@@ -18,6 +18,8 @@ import Service from './components/admin/Services'
 import ServiceEdit from './components/admin/ServicesEdit'
 import NewService from './components/admin/NewServices'
 import ServicesList from './components/ServicesList';
+import ServiceView from './components/serviceBlog';
+
 
 function App() {
   return (
@@ -40,6 +42,10 @@ function App() {
     <Route path='/admin/newservice' element={<NewService/>} />
     <Route path='/admin/editservice/:id' element={<ServiceEdit/>} />
     <Route path='/services' element={<ServicesList/>} />
+    <Route path='/services/:id' element={<ServiceView/>} />
+    
+   
+
     </Routes>
     </BrowserRouter>
   );

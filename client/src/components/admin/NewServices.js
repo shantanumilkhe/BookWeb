@@ -23,7 +23,6 @@ const NewServices = () => {
     var formData = new FormData();
 
     formData.append("images", image);
-    formData.append('serviceNo', info.serviceNo);
     formData.append("name", info.name);
     formData.append('description', info.description);
 
@@ -44,11 +43,7 @@ const NewServices = () => {
       <form className='react-form'>
         <h1>Add New Service</h1>
 
-        <fieldset className='form-group'>
-          <h4>Service number</h4>
-
-          <input id='formName' className='form-input' name='serviceNo' type='number' value={info.serviceNo} required onChange={handleChange} />
-        </fieldset>
+       
 
         <fieldset className='form-group'>
           <h4>Service Name:</h4>

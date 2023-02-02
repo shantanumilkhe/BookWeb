@@ -1,0 +1,56 @@
+.c-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25em;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  margin: 0 2rem 2rem 0;
+
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.cards-container {
+	padding: 40px 0px 0px 0px;
+	width: 100%;
+	margin: auto;
+	flex-wrap: wrap;
+	display: flex;
+	justify-content: space-around;
+	justify-content:center;
+	flex-wrap: wrap;
+	max-width: 1560px;
+}
+
+img {
+ width: 25rem;
+  height: 15rem;
+  border-radius: 10px;
+  object-fit:cover;
+  align-items: center;
+
+}
+
+
+
+.c-card__content > h1 {
+  text-align: left;
+ padding-left: 1rem;
+}
+.c-card__content > p {
+  text-align: left;
+  margin: 1rem;
+  width: 40ch;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.c-card__content {
+  padding: 10px 0;
+}

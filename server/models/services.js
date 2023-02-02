@@ -19,7 +19,7 @@ const serviceSchema = new Schema({
     },
     serviceNo: {
         type: Number,
-        required: true
+       
     },
     images: ImageSchema
 });
