@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-
+import '../../css/serviceCards.scss'
 
 const Services = () => {
   let navigate = useNavigate();
@@ -14,28 +14,18 @@ const Services = () => {
     getServiceList();
   }, []);
 
-  return (
-    <>
-      <div>
-        <div className='container'>
-          <div className="btn" onClick={() => navigate('/admin/newservice')}>
-            <p className="card-text">Add a New Service</p>
-          </div>
-        </div>
-        <div className='blogList-wrap'>
-        {service?service.map((sub) => 
-        <div className='blog-wrap' style={{cursor:'pointer'}} onClick={()=>navigate('/admin/editservice/'+sub.id)}>
-          <header>
-            <h1>{sub.name}</h1>
-          </header>
-          <img src='/assets/images/designer-1.jpg' alt='cover' />
-          <p className='blog-desc'>{sub.description}</p>
-        </div>
-        ):null}
+  const listItems = service?service.map((post) => {return (
+    <div className="c-card" onClick={()=>navigate('/admin/editservice/'+post.id)}>
+        <img classname="cardImage" src={post.images} />
+        <div className="c-card__content">
+          <h1>{post.name}</h1>
+          <p >{post.description}</p>
+        
         </div>
       </div>
-    </>
-  );
+    )
+  }):null
+  return <div className="cards-container"> {listItems} </div>
 };
 
 export default Services;

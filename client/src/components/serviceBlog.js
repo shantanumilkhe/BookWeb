@@ -3,37 +3,38 @@ import axios from 'axios'
 import { useParams } from 'react-router-dom'
 
 
-const blog = () => {
-    // let id = useParams();
-    // const [blog, setBlog] = useState(null);
-    // useEffect(() => {
-    //     async function getBlogList() {
-    //         axios.get('/sr/serviceData/' + id).then(res => { setBlog(res.data.files) });
-    //     }
-    //     getBlogList();
-    // }, []);
+const ServiceView = () => {
+    let id = useParams();
+    const [blog, setBlog] = useState(null);
+    useEffect(() => {
+        async function getBlogList() {
+            await axios.get('/sr/serviceData/' + id.id).then(res => { console.log(res.data);setBlog(res.data) });
+        }
+        getBlogList();
+    }, []);
 
     return (
         <div>
+            {blog?
+            <div>
             <div class="header">
                 <div class="sides">
                   
                 </div>
                 <div class="sides"> <a href="#" class="menu"> </a></div>
                 <div class="info">
-                  
-                    <h1>KEN BURNS HEADERS ARE THE BEST</h1>
-                   
+                    <h1>{blog.name}</h1>
                 </div>
             </div>
-            <section class="content">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In nisl turpis, porttitor et finibus id, viverra a metus. Praesent non ante sed orci posuere varius quis sit amet dui. Cras molestie magna orci, id gravida dolor molestie in. Duis sollicitudin turpis quis tortor egestas, ut ultrices nisl elementum. Vestibulum sed ipsum eget nulla laoreet cursus in ac sem. Integer a suscipit justo, quis aliquam sapien. Maecenas et tellus nibh. Vivamus tincidunt eros id commodo pellentesque.</p>
-                
-            </section>
+            <img src={blog.images.url} alt='Service Image'/>
+            <div>
+                <p>{blog.description}</p>
+            </div>
+            </div>:null}
         </div>
 
     )
 
 }
 
-export default blog;
+export default ServiceView;

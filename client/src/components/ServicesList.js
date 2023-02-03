@@ -19,14 +19,12 @@ const ServicesList = () => {
   
   const listItems = service?service.map((post) => {return (
     <div className="c-card" onClick={()=>navigate('/services/'+post.id)}>
-      <li >
         <img classname="cardImage" src={post.images} />
         <div className="c-card__content">
           <h1>{post.name}</h1>
           <p >{post.description}</p>
         
         </div>
-      </li>
       </div>
     )
   }):null
