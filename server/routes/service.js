@@ -66,6 +66,7 @@ router.put('/updateservice/:id', upload.array('images'), async (req, res) => {
     try {
         const id = req.params.id;
         const svc = await service.findById(id);
+        console.log(svc)
         if (req.files.length > 0) {
             await cloudinary.uploader.destroy(svc.images.filename);
             svc.images = { url: req.files[0].path, filename: req.files[0].filename }

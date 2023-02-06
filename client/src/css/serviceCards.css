@@ -10,7 +10,7 @@
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
     justify-content: space-between;
-    width: 25em;
+    width: 26rem;
     height: auto;
     border-radius: 10px;
     -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
@@ -45,7 +45,7 @@
 }
 
 img {
-    width: 25rem;
+    width: 26rem;
     height: 15rem;
     border-radius: 10px;
     -o-object-fit: cover;
@@ -58,6 +58,7 @@ img {
 .c-card__content>h1 {
     text-align: left;
     padding-left: 1rem;
+    padding-right: 1rem;
     font-size: xx-large
 }
 

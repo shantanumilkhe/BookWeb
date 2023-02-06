@@ -21,8 +21,6 @@ const ServiceView = () => {
 
                     <h1 className='blogh1'>{blog.name}</h1>
                     <img className='slide-content' src={blog.images.url} />
-
-
                     <p className='para'>{blog.description}</p>
 
                 </div> : null}

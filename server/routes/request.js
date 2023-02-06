@@ -12,7 +12,7 @@ router.get('/allChapterID', (req, res) => {
         const filesData = files.map(file => {
             return {
                 id: file._id,
-                googleId: file.googleId,
+                pdfId: file.pdfId,
                 name: file.name,
                 chapterNo: file.chapterNo,
                 chapterIndex: file.chapterIndex
