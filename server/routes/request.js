@@ -31,19 +31,7 @@ router.get('/ChapterData/:id', async (req, res) => {
     }
 });
 
-router.delete('/deleteChapter/:id', (req, res) => {
-    console.log(req.params.id);
-    Chapter.findByIdAndRemove(req.params.id, (err, doc) => {
-        if (!err) {
-            console.log('Chapter Deleted Successfully')
-            res.status(200)
-            // res.send(doc);
-        }
-        else {
-            console.log('Error in Deleting Chapter : ' + JSON.stringify(err, undefined, 2));
-        }
-    });
-})
+
 
 
 

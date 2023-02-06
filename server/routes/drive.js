@@ -185,4 +185,19 @@ router.post('/updateChapter/:id', upload.single("document"), async (req, res) =>
 
 })
 
+router.delete('/deleteChapter/:id', (req, res) => {
+  console.log(req.params.id);
+  
+  chapter.findByIdAndRemove(req.params.id, (err, doc) => {
+      if (!err) {
+          console.log('Chapter Deleted Successfully')
+          res.status(200)
+          // res.send(doc);
+      }
+      else {
+          console.log('Error in Deleting Chapter : ' + JSON.stringify(err, undefined, 2));
+      }
+  });
+})
+
 module.exports = router;

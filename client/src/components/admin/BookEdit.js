@@ -47,7 +47,7 @@ const BookEdit = () => {
 
   const handleDelete = async () => {
     console.log(id)
-    await axios.delete('/get/deleteChapter/' + id.id)
+    await axios.delete('/drive/deleteChapter/' + id.id)
       .then((res) => setMessage('Success'))
       .catch((err) => (setMessage(err.message)));
   }
