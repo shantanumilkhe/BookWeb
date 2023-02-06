@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes,Route } from 'react-router-dom';
 import Fetch from './components/BookView/Fetch'
+import Fetch2 from './components/BookView/FetchGR'
 import Home from './components/Home';
 import Navbar from './css/Navbar';
 import Display from './components/BookView/Chapters'
@@ -29,6 +30,7 @@ function App() {
     <Route path="/" element={<Home />} />
     <Route path='/book' element={<Display/>}/>
     <Route path='/viewer/:id' element={<Fetch/>}/>
+    <Route path='/viewerGR/:id' element={<Fetch2/>}/>
     <Route path='/admin/newbook' element={<NewBook/>}/>
     <Route path='/admin/login' element={<Login/>}/>
     <Route path='/admin/dashboard' element={<Dashboard/>}/>

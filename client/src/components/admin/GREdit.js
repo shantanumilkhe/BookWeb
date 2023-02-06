@@ -9,7 +9,7 @@ const GREdit = () => {
   const [pdf,setPDF] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
   const [message,setMessage] = useState(null);
-  const [gid, setgid] = useState(null);
+  const [pdfId, setgid] = useState(null);
   const handleFile = async (e) => {
     const file = e.target.files[0];
     let url = URL.createObjectURL(file);
@@ -31,12 +31,12 @@ const GREdit = () => {
     var FormData = require('form-data');
     var formData = new FormData();
 
-    formData.append("document", pdf);
-   
+    formData.append("documente", pdf);
+    formData.append('pdfId', pdfId)
     formData.append("title", info.name);
 
 
-    await fetch('/'+id.id, {
+    await fetch('/gr/updategr/'+id.id, {
       method: 'POST',
       body: formData,
     })
@@ -56,7 +56,7 @@ const GREdit = () => {
         await axios.get('/gr/getGRData/'+id.id).then(res=>{
           console.log(res.data)
           setInfo({name:res.data.name,number:res.data.number});
-          setgid(res.data.googleId);
+          setgid(res.data.pdfId);
         }).catch(err=>console.log(err))
     }
     getDetails();

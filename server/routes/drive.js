@@ -60,65 +60,79 @@ router.get('/:id', async (req, res) => {
 });
 
 
+router.delete('/deleteChapter/:id', async (req, res) => {
+  console.log(req.params.id);
+  const id = req.params.id;
+  console.log(id)
+  const ch1 = await chapter.findOne({ _id: id });
+  const chid = ch1.pdfId;
+  console.log(chid)
 
-router.post('/updateChapter/:id', upload.single("document"), async (req, res) => {
+  const pathch = path.join('./Chapters/', chid);
+console.log(pathch)
+
+  fs.unlink(pathch, (err) => {
+    if (err) {
+      res.status(500).send({ error: 'Error deleting file' });
+    } else {
+      console.log('File deleted successfully')
+    }
+  });
+
+  chapter.findByIdAndRemove(req.params.id, (err, doc) => {
+    if (!err) {
+      console.log('Chapter Deleted Successfully')
+      res.status(200)
+      // res.send(doc);
+    }
+    else {
+      console.log('Error in Deleting Chapter : ' + JSON.stringify(err, undefined, 2));
+    }
+  });
+})
+
+
+router.post('/updateChapter/:id', upload.single("documente"), async (req, res) => {
   console.log(req.body);
   console.log(req.file);
 
   const index = (req.body.index);
   const newi = index.split('\n');
 
-  let googleId = req.body.googleId;
+  let chide = req.body.pdfId;
+  console.log(chide)
   const name = req.body.title;
   const chapterNo = req.body.chapterNO;
   const chapterIndex = newi;
 
   // Check if the request is a multi-part request (i.e. it contains a file)
 
-  if (!req.is('multipart/form-data')) {
-    return res.status(400).send({ message: 'Not a multipart request' });
-  }
-
   // Parse the file from the request
   const file = req.file;
 
   if (file) {
     // Create a new file on Google Drive
-    await new Promise((resolve, reject) => {
-      drive.files.create({
-        resource: {
-          name: file.originalname,
-          mimeType: file.mimetype,
-          //parents: ['Chapters'] // optional: put the file in a specific folder
-        },
-        media: {
-          mimeType: file.mimetype,
-          body: fs.createReadStream(file.path)
-        },
-        fields: 'id'
-      }, (err, result) => {
-        if (err) {
-          reject(err);
-        } else {
-          googleId = result.data.id;
-          resolve();
-        }
-      });
+    const pathche = path.join('./Chapters/', chide);
+
+    fs.unlink(pathche, (err) => {
+      if (err) {
+       console.log(err)
+      } else {
+        console.log('File deleted successfully')
+      }
     });
+
+    chide = file.filename;
   }
 
-
-  // if (!req.body) {
-  //     return res.status(400).send('Request body is missing');
-  // }
   chapter.findByIdAndUpdate(req.params.id, {
     name: name,
     chapterNo: chapterNo,
     chapterIndex: chapterIndex,
-    googleId: googleId
+   pdfId: chide
   }, { new: true }, (err, doc) => {
     if (!err) {
-      res.redirect('/book');
+      res.send("Chapter Updated Successfully")
     }
     else {
       console.log('Error in Updating Chapter : ' + JSON.stringify(err, undefined, 2));
@@ -128,34 +142,6 @@ router.post('/updateChapter/:id', upload.single("document"), async (req, res) =>
 
 })
 
-router.delete=('/deleteChapter/:id', (req, res) => {
-  console.log(req.params.id);
-  const id = req.params.id;
-  console.log(id)
-  const ch = chapter.find();
- 
-  const chid = ch.pdfId;
-  console.log(chid);
-  // const pathch = path.join(__dirname, '../Chapters/', chid);
 
-  // fs.unlink(pathch, (err) => {
-  //   if (err) {
-  //     res.status(500).send({ error: 'Error deleting file' });
-  //   } else {
-  //     console.log('File deleted successfully')
-  //   }
-  // });
-
-  // chapter.findByIdAndRemove(req.params.id, (err, doc) => {
-  //   if (!err) {
-  //     console.log('Chapter Deleted Successfully')
-  //     res.status(200)
-  //     // res.send(doc);
-  //   }
-  //   else {
-  //     console.log('Error in Deleting Chapter : ' + JSON.stringify(err, undefined, 2));
-  //   }
-  // });
-})
 
 module.exports = router;

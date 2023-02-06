@@ -6,141 +6,142 @@ const fs = require('fs');
 const path = require('path');
 const gr = require('../models/gr');
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './documents')
-    },
+var shortid = require('shortid');
 
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: './GR/',
     filename: function (req, file, cb) {
-        let filename = 'GRfile';
-        req.body.file = filename
-        cb(null, filename)
+      // user shortid.generate() alone if no extension is needed
+      cb(null, shortid.generate() + (file.originalname));
     }
-})
-
-const upload = multer({ storage: storage })
-
-const oAuth2Client = new google.auth.OAuth2(
-    process.env.CLIENT_ID,
-    process.env.CLIENT_SECRET,
-    process.env.REDIRECT_URI
-)
-
-oAuth2Client.setCredentials({ refresh_token: process.env.REFRESH_TOKEN })
-
-// Create a new drive instance
-const drive = google.drive({ version: 'v3', auth: oAuth2Client });
+  })
+});
 
 router.post('/upload', upload.single("document"), (req, res) => {
-    console.log(req.body)
-    const index = (req.body.index);
-    
-    // Check if the request is a multi-part request (i.e. it contains a file)
-    if (!req.is('multipart/form-data')) {
-        return res.status(400).send({ message: 'Not a multipart request' });
-    }
+  console.log(req.body)
+  const index = (req.body.index);
 
-    // Parse the file from the request
-    const file = req.file;
-    if (!file) {
-        return res.status(400).send({ message: 'No file was provided' });
-    }
+  if (!req.is('multipart/form-data')) {
+    return res.status(400).send({ message: 'Not a multipart request' });
+  }
 
-    // Create a new file on Google Drive
-    drive.files.create({
-        resource: {
-            name: file.originalname,
-            mimeType: file.mimetype,
-            //parents: ['Chapters'] // optional: put the file in a specific folder
-        },
-        media: {
-            mimeType: file.mimetype,
-            body: fs.createReadStream(file.path)
-        },
-        fields: 'id'
-    }, (err, result) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).send({ message: err.message });
-        } else {
-            const newFile = new gr({
-                googleId: result.data.id,
-                name: req.body.title,
-                size: file.size,
-                type: file.mimetype,
-            });
-            // save the new file object to the database
-            newFile.save()
-        }
-        return res.status(200).send({ message: 'File uploaded successfully', fileId: result.id });
-    });
+  // Parse the file from the request
+  const file = req.file;
+
+  if (!file) {
+    return res.status(400).send({ message: 'No file was provided' });
+  }
+  console.log(file)
+  const newFile = new gr({
+   pdfId: file.filename,
+    name: req.body.title,
+    size: file.size,
+    type: file.mimetype,
+  });
+  // save the new file object to the database
+  newFile.save()
+
 });
 
 router.get('/allgrID', (req, res) => {
-   gr.find({}, (err, files) => {
-      if(err) return res.status(500).send({error: err});
-      const filesData = files.map(file => {
-        return {
-            id: file._id,
-          googleId: file.googleId,
-          name: file.name,
-        }
-      });
-      res.status(200).send({ files: filesData });
+  gr.find({}, (err, files) => {
+    if (err) return res.status(500).send({ error: err });
+    const filesData = files.map(file => {
+      return {
+        id: file._id,
+        pdfId: file.pdfId,
+        name: file.name,
+      }
     });
+    res.status(200).send({ files: filesData });
   });
+});
 
-router.get('/getGRData/:id',async (req,res)=>{
+router.get('/getGRData/:id', async (req, res) => {
   try {
-    let GR = await gr.findOne({_id:req.params.id});
+    let GR = await gr.findOne({ _id: req.params.id });
     res.status(200).send(GR);
   } catch (error) {
     console.log(error);
   }
 })
 
-  router.get('/:id', async (req, res) => {
-    drive.files.get({
-      fileId: req.params.id,
-      alt: 'media'
-    }, { responseType: 'stream' }, (err, response) => {
-      if (err) {
-        console.log(err);
-        res.status(500).send(err);
-      } else {
-        response.data
-          .on('end', () => {
-            console.log('Done');
-          })
-          .on('error', (err) => {
-            console.log('Error', err);
-          })
-          .pipe(res);
-      }
-    });
+router.get('/:id', async (req, res) => {
+  console.log(req.params.id);
+  const ch = await gr.findOne({ _id: req.params.id });
+  const chid = ch.pdfId;
+  const pathch = path.join(__dirname, '../GR/');
+  res.sendFile(chid, { root: pathch })
+
+});
+
+router.delete('/deletegr/:id', async (req, res) => {
+  console.log(req.params.id);
+  const id = req.params.id;
+  console.log(id)
+  const ch1 = await gr.findOne({ _id: id });
+  const chid = ch1.pdfId;
+  console.log(chid)
+
+  const pathch = path.join('./GR/', chid);
+
+  fs.unlink(pathch, (err) => {
+    if (err) {
+      res.status(500).send({ error: 'Error deleting file' });
+    } else {
+      console.log('File deleted successfully')
+    }
+  });
+
+  gr.findByIdAndRemove(req.params.id, (err, doc) => {
+    if (!err) {
+      console.log('Chapter Deleted Successfully')
+      res.status(200)
+      // res.send(doc);
+    }
+    else {
+      console.log('Error in Deleting Chapter : ' + JSON.stringify(err, undefined, 2));
+    }
+  });
+});
+
+router.post('/updategr/:id', upload.single("documente"), async (req, res) => {
+  console.log(req.body);
+  console.log(req.file);
+
   
-  });
+  let chide = req.body.pdfId;
+  console.log(chide)
+  const name = req.body.title;
+  const file = req.file;
 
-  router.delete('/deletegr/:id', (req, res) => {
-    gr.findByIdAndRemove(req.params.id, (err, file) => {
-      if (err) return res.status(500).send({ error: err });
-      drive.files.delete({ fileId: file.googleId }, (err, result) => {
-        if (err) return res.status(500).send({ error: err });
-        res.status(200).send({ message: 'File deleted successfully' });
-      });
-    });
-  });
-
-  router.put('/updategr/:id', (req, res) => {
-    gr.findByIdAndUpdate(req.params.id, { name: req.body.name }, (err, file) => {
-      if (err) return res.status(500).send({ error: err });
-      drive.files.update({ fileId: file.googleId, resource: { name: req.body.name } }, (err, result) => {
-        if (err) return res.status(500).send({ error: err });
-        res.status(200).send({ message: 'File updated successfully' });
-      });
-    });
-  });
-
-
+  if (file) {
   
-  module.exports = router;
+  
+  const pathch = path.join('./GR/', chide);
+
+  fs.unlink(pathch, (err) => {
+    if (err) {
+      res.status(500).send({ error: 'Error deleting file' });
+    } else {
+      console.log('File deleted successfully')
+    }
+  });
+  chide=file.filename;
+  }
+
+  const ch = await gr.findOneAndUpdate({ _id: req.params.id }, {
+    pdfId: chide,
+    name: name,
+    size: file.size,
+    type: file.mimetype,
+  }, { new: true });
+  res.status(200);
+
+});
+
+
+
+module.exports = router;

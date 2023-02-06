@@ -9,7 +9,7 @@ const GRList = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
   const pageOpen = (id) => {
-    let path = '/viewer/' + id;
+    let path = '/viewerGR/' + id;
     navigate(path)
   }
 
@@ -46,7 +46,7 @@ const GRList = () => {
                 }
               }).map((chp, idx) => {
                 return <tr>
-                  <td data-label="Name"  onClick={() => pageOpen(chp.googleId)}>{chp.name}</td>
+                  <td data-label="Name"  onClick={() => pageOpen(chp.id)}>{chp.name}</td>
                 </tr>
               })}
 
