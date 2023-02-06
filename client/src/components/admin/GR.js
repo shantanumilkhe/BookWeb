@@ -33,8 +33,9 @@ const GR = () => {
                     <div className="accordion ">
                         {chapters.map((chp, idx) => {
                             return <div className="item">
-
+                                
                                 <div className="title">
+                                    <h2 > {idx+1}. </h2>
                                     <h2 >{chp.name}</h2>
                                     <button className="seeMore" onClick={() => pageOpen(chp.id)}>Update GR</button>
                                 </div>

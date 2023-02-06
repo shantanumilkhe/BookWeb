@@ -91,8 +91,10 @@ body {
 }
 
 .seeMore {
-	margin: 10px auto;
+	margin: 10px ;
 	display: block;
+	align-items: center;
+	
 	justify-content: center;
 	width: 80px;
 	height: 25px;

@@ -8,7 +8,7 @@ const BookEdit = () => {
   const [message, setMessage] = useState(null);
   const [info, setInfo] = useState({ name: null,number:null, index: null })
   const [pdf, setPDF] = useState(null);
-  const [gid, setgid] = useState(null);
+  const [pdfid, setpdfid] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
   const handleFile = async (e) => {
     const file = e.target.files[0];
@@ -30,11 +30,11 @@ const BookEdit = () => {
     var FormData = require('form-data');
     var formData = new FormData();
 
-    formData.append("document", pdf);
+    formData.append("documente", pdf);
     formData.append('chapterNO', info.number);
     formData.append("title", info.name);
     formData.append('index', [info.index]);
-    formData.append('googleId', gid);
+    formData.append('pdfId', pdfid);
 
 
     await fetch("/drive/updateChapter/" + id.id, {
@@ -56,7 +56,7 @@ const BookEdit = () => {
     async function getDetails() {
       await axios.get('/get/ChapterData/' + id.id).then(res => {
         setInfo({ name: res.data.name, number: res.data.chapterNo,index:res.data.chapterIndex });
-        setgid(res.data.googleId);
+        setpdfid(res.data.pdfId);
       }).catch(err => console.log(err))
     }
     getDetails();
