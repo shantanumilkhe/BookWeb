@@ -73,6 +73,14 @@ function Navbar() {
                 GR
               </div>
             </div>
+            <div className='nav-item'>
+              <div
+                className='nav-links'
+                onClick={() => { setClick(false); navigate('/contact'); }}
+              >
+                Contact Us
+              </div>
+            </div>
             {!admin ? null :
                 <>
                 <div className='nav-item'>
