@@ -1,28 +1,28 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../../css/Cards.css';
 import CardItem from '../../css/CardItem';
+import axios from 'axios'
 
 const Dashboard = () => {
     let navigate = useNavigate();
-    const axiosInstance = axios.create({
-      baseURL: process.env.REACT_APP_API_URL,
-  });
+
+    useEffect(() => {
+      let token = localStorage.getItem('token');
+      async function authenticate(){
+        if(token==null){
+          navigate('/admin/login')
+        }
+        await axios.get('/auth/authenticate', { headers: { Authorization: token } }).then(res => {
+          console.log(res)
+          if (res.status != 200){
+            navigate('/admin/login')
+          }}).catch(err=>console.log(err));
+      }
+      authenticate();
+    }, [])
+    
     return (
-        // <div className='row'>
-        //     <div className="card col" onClick={()=>navigate('/admin/book')}>
-        //         <img className="card-img-top" src="..." alt="Card image cap"/>
-        //             <div className="card-body">
-        //                 <p className="card-text">Book</p>
-        //             </div>
-        //     </div>
-        //     <div className="card col" onClick={()=>navigate('/admin/gr')}>
-        //         <img className="card-img-top" src="..." alt="Card image cap"/>
-        //             <div className="card-body">
-        //                 <p className="card-text">GR</p>
-        //             </div>
-        //     </div>
-        // </div>
         <div className='cards'>
       <h1>Admin DashBoard</h1>
       <div className='cards__container'>
