@@ -5,10 +5,13 @@ const Login = () => {
   let navigate = useNavigate();
   const [info, setInfo] = useState({ username: null, password: null })
   const [message, setMessage] = useState(null);
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+});
   let name, value;
 
   const submitInfo = async () => {
-    await axios.post('/auth/login', info).then(res => {setMessage(res.data.message);localStorage.setItem('token',res.data.token);if(res.data.success==true){navigate('/admin/dashboard')}}).catch(err => {setMessage(err.response.data.message);});
+    await axiosInstance.post('/auth/login', info).then(res => {setMessage(res.data.message);localStorage.setItem('token',res.data.token);if(res.data.success==true){navigate('/admin/dashboard')}}).catch(err => {setMessage(err.response.data.message);});
   }
 
   const handleInput = (e) => {

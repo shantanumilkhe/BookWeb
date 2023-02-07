@@ -6,10 +6,12 @@ import '../css/serviceCards.css'
 const ServicesList = () => {
   let navigate = useNavigate();
   const [service, setService] = useState(null);
-
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+});
   useEffect(() => {
     async function getServiceList() {
-      axios.get('/sr/allservices').then(res => {setService(res.data.files)});
+      axiosInstance.get('/sr/allservices').then(res => {setService(res.data.files)});
     }
     getServiceList();
   }, []);

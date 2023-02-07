@@ -7,9 +7,12 @@ import '../css/blog.css'
 const ServiceView = () => {
     let id = useParams();
     const [blog, setBlog] = useState(null);
+    const axiosInstance = axios.create({
+        baseURL: process.env.REACT_APP_API_URL,
+    });
     useEffect(() => {
         async function getBlogList() {
-            await axios.get('/sr/serviceData/' + id.id).then(res => { console.log(res.data); setBlog(res.data) });
+            await axiosInstance.get('/sr/serviceData/' + id.id).then(res => { console.log(res.data); setBlog(res.data) });
         }
         getBlogList();
     }, []);

@@ -153,7 +153,7 @@ const Fetch = () => {
     const { ZoomInButton, ZoomOutButton, ZoomPopover } = zoomPluginInstance;
   async function getFile() {
     try {
-      const response = await fetch('/drive/' + params.id, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/drive/` + params.id, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/octet-stream'

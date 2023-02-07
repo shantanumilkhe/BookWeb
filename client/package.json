@@ -1,8 +1,7 @@
 {
   "name": "client",
   "version": "0.1.0",
-  "private": true,
-  "proxy": "http://localhost:5000",
+  "homepage": ".",
   "dependencies": {
     "@enykeev/react-virtualized": "^9.22.4-mirror.1",
     "@react-pdf-viewer/core": "^3.11.0",

@@ -1,8 +1,8 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useParams } from 'react-router-dom'
 const ServicesEdit = () => {
-  let id= useParams();
+  let id = useParams();
   const [info, setInfo] = useState({ name: null, description: null, serviceNo: null })
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState(null);
@@ -29,6 +29,9 @@ const ServicesEdit = () => {
     e.preventDefault()
     var FormData = require('form-data');
     var formData = new FormData();
+    const axiosInstance = axios.create({
+      baseURL: process.env.REACT_APP_API_URL,
+    });
 
     formData.append("images", image);
     formData.append('serviceNo', info.serviceNo);
@@ -36,7 +39,7 @@ const ServicesEdit = () => {
     formData.append('description', info.description);
     console.log(formData)
 
-    await fetch("/sr/updateservice/"+id.id, {
+    await fetch(`${process.env.REACT_APP_API_URL}/sr/updateservice/` + id.id, {
       method: 'PUT',
       body: formData,
     })
@@ -44,13 +47,13 @@ const ServicesEdit = () => {
       .catch((err) => (setMessage(err.message)));
   }
   useEffect(() => {
-    async function getServiceInfo(){
-      axios.get('/sr/serviceData/'+id.id).then(res=>
-        setInfo({name:res.data.name,description:res.data.description,serviceNo:res.data.serviceNo})).catch(err=>console.log(err));
+    async function getServiceInfo() {
+      axiosInstance.get('/sr/serviceData/' + id.id).then(res =>
+        setInfo({ name: res.data.name, description: res.data.description, serviceNo: res.data.serviceNo })).catch(err => console.log(err));
     }
     getServiceInfo();
   }, [])
-  
+
   return (
     <div>
       {message == null ? null : <div class="alert alert-warning" role="alert">

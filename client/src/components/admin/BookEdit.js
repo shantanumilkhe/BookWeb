@@ -16,7 +16,9 @@ const BookEdit = () => {
     setPDF(file);
     setPdfFile(url);
   };
-
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+});
   let name, value;
 
   const handleChange = (e) => {
@@ -37,7 +39,7 @@ const BookEdit = () => {
     formData.append('pdfId', pdfid);
 
 
-    await fetch("/drive/updateChapter/" + id.id, {
+    await fetch(`${process.env.REACT_APP_API_URL}/drive/updateChapter/` + id.id, {
       method: 'POST',
       body: formData,
     })
@@ -47,14 +49,14 @@ const BookEdit = () => {
 
   const handleDelete = async () => {
     console.log(id)
-    await axios.delete('/drive/deleteChapter/' + id.id)
+    await axiosInstance.delete('/drive/deleteChapter/' + id.id)
       .then((res) => setMessage('Success'))
       .catch((err) => (setMessage(err.message)));
   }
   useEffect(() => {
   
     async function getDetails() {
-      await axios.get('/get/ChapterData/' + id.id).then(res => {
+      await axiosInstance.get('/get/ChapterData/' + id.id).then(res => {
         setInfo({ name: res.data.name, number: res.data.chapterNo,index:res.data.chapterIndex });
         setpdfid(res.data.pdfId);
       }).catch(err => console.log(err))

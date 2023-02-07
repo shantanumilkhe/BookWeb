@@ -5,6 +5,9 @@ import CardItem from '../../css/CardItem';
 
 const Dashboard = () => {
     let navigate = useNavigate();
+    const axiosInstance = axios.create({
+      baseURL: process.env.REACT_APP_API_URL,
+  });
     return (
         // <div className='row'>
         //     <div className="card col" onClick={()=>navigate('/admin/book')}>

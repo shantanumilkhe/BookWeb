@@ -7,7 +7,9 @@ const Book = () => {
     let navigate = useNavigate();
     const [chapters, setChapter] = useState([]);
     const [selected, setSelected] = useState(null);
-    
+    const axiosInstance = axios.create({
+        baseURL: process.env.REACT_APP_API_URL,
+    });
 
     const toogle = (id) => {
         if (selected === id) {
@@ -22,7 +24,7 @@ const Book = () => {
 
     useEffect(() => {
         async function getChapters() {
-            await axios.get("/get/allChapterID").then((res) => { console.log(res.data.files); setChapter(res.data.files) }).catch(err => console.log(err));
+            await axiosInstance.get("/get/allChapterID").then((res) => { console.log(res.data.files); setChapter(res.data.files) }).catch(err => console.log(err));
         }
         getChapters();
     }, [])

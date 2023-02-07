@@ -33,7 +33,7 @@ const Uploader = () => {
     formData.append('index', [info.index]);
 
 
-    await fetch("/drive/upload", {
+    await fetch(`${process.env.REACT_APP_API_URL}/drive/upload`, {
       method: 'POST',
       body: formData,
     })

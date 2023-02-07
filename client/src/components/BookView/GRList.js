@@ -15,7 +15,7 @@ const GRList = () => {
 
   useEffect(() => {
     async function getChapters() {
-      await axios.get("/gr/allgrID").then((res) => { console.log(res.data); setChapter(res.data.files) }).catch(err => console.log(err));
+      await axios.get(`${process.env.REACT_APP_API_URL}/gr/allgrID`).then((res) => { console.log(res.data); setChapter(res.data.files) }).catch(err => console.log(err));
     }
     getChapters();
   }, [])

@@ -31,7 +31,7 @@ const Uploader = () => {
     formData.append("title", info.name);
 
 
-    await fetch("/gr/upload", {
+    await fetch(`${process.env.REACT_APP_API_URL}/gr/upload`, {
       method: 'POST',
       body: formData,
     })

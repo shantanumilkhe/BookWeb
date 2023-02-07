@@ -16,6 +16,9 @@ const GREdit = () => {
     setPDF(file);
     setPdfFile(url);
   };
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+});
 
   let name, value;
 
@@ -36,7 +39,7 @@ const GREdit = () => {
     formData.append("title", info.name);
 
 
-    await fetch('/gr/updategr/'+id.id, {
+    await fetch(`${process.env.REACT_APP_API_URL}/gr/updategr/`+id.id, {
       method: 'POST',
       body: formData,
     })
@@ -46,14 +49,14 @@ const GREdit = () => {
   }
 
   const handleDelete = async ()=>{
-    await axios.delete('/gr/deletegr/'+id.id)
+    await axiosInstance.delete('/gr/deletegr/'+id.id)
     .then((res) => setMessage('Success'))
     .catch((err) => (setMessage(err.message)));
   }
 
   useEffect(() => {
     async function getDetails(){
-        await axios.get('/gr/getGRData/'+id.id).then(res=>{
+        await axiosInstance.get('/gr/getGRData/'+id.id).then(res=>{
           console.log(res.data)
           setInfo({name:res.data.name,number:res.data.number});
           setgid(res.data.pdfId);

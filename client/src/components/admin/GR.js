@@ -6,6 +6,9 @@ import '../../css/bookIndex.css'
 const GR = () => {
     let navigate = useNavigate();
     const [chapters, setChapter] = useState([]);
+    const axiosInstance = axios.create({
+        baseURL: process.env.REACT_APP_API_URL,
+    });
     const pageOpen = (id) => {
         let path = '/admin/editgr/' + id;
         navigate(path)
@@ -13,7 +16,7 @@ const GR = () => {
 
     useEffect(() => {
         async function getChapters() {
-            await axios.get("/gr/allgrID").then((res) => { console.log(res.data.files); setChapter(res.data.files) }).catch(err => console.log(err));
+            await axiosInstance.get("/gr/allgrID").then((res) => { console.log(res.data.files); setChapter(res.data.files) }).catch(err => console.log(err));
         }
         getChapters();
     }, [])

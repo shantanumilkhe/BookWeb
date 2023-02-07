@@ -27,7 +27,7 @@ const NewServices = () => {
     formData.append('description', info.description);
 
 
-    await fetch("/sr/addservice", {
+    await fetch(`${process.env.REACT_APP_API_URL}/sr/addservice`, {
       method: 'POST',
       body: formData,
     })
