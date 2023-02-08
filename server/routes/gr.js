@@ -11,7 +11,7 @@ var shortid = require('shortid');
 
 const upload = multer({
   storage: multer.diskStorage({
-    destination: './GR/',
+    destination: '/root/mtpc/GR/',
     filename: function (req, file, cb) {
       // user shortid.generate() alone if no extension is needed
       cb(null, shortid.generate() + (file.originalname));
@@ -72,7 +72,7 @@ router.get('/:id', async (req, res) => {
   console.log(req.params.id);
   const ch = await gr.findOne({ _id: req.params.id });
   const chid = ch.pdfId;
-  const pathch = path.join(__dirname, '../GR/');
+  const pathch = path.join(__dirname, '/root/mtpc/GR/');
   res.sendFile(chid, { root: pathch })
 
 });
@@ -85,7 +85,7 @@ router.delete('/deletegr/:id', async (req, res) => {
   const chid = ch1.pdfId;
   console.log(chid)
 
-  const pathch = path.join('./GR/', chid);
+  const pathch = path.join('/root/mtpc/GR/', chid);
 
   fs.unlink(pathch, (err) => {
     if (err) {
@@ -120,7 +120,7 @@ router.post('/updategr/:id', upload.single("documente"), async (req, res) => {
   if (file) {
   
   
-  const pathch = path.join('./GR/', chide);
+  const pathch = path.join('/root/mtpc/GR/', chide);
 
   fs.unlink(pathch, (err) => {
     if (err) {
