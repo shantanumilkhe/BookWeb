@@ -112,7 +112,7 @@ router.post('/updateChapter/:id', upload.single("documente"), async (req, res) =
 
   if (file) {
     // Create a new file on Google Drive
-    const pathche = path.join('./Chapters/', chide);
+    const pathche = path.join('/root/mtpc/Chapters/', chide);
 
     fs.unlink(pathche, (err) => {
       if (err) {
