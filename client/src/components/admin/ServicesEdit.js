@@ -10,6 +10,9 @@ const ServicesEdit = () => {
     const file = e.target.files[0];
     setImage(file);
   };
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
 
   let name, value;
 
