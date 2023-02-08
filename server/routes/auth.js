@@ -22,6 +22,7 @@ router.post('/login', async (req, res) => {
     try {
         console.log(req.body)
         const { username, password } = req.body;
+        console.log(username, password);
         if (!username || !password) {
             return res.status(422).send({ message: "Please fill the data" });
         }
