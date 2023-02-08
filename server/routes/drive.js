@@ -55,7 +55,7 @@ router.get('/:id', async (req, res) => {
   console.log(req.params.id);
   const ch = await chapter.findOne({ _id: req.params.id });
   const chid = ch.pdfId;
-  const pathch = path.join(__dirname, '/root/mtpc/Chapters/');
+  const pathch = path.join('/root/mtpc/Chapters/');
   res.sendFile(chid, { root: pathch });
 });
 

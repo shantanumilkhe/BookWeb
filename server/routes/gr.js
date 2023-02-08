@@ -72,7 +72,7 @@ router.get('/:id', async (req, res) => {
   console.log(req.params.id);
   const ch = await gr.findOne({ _id: req.params.id });
   const chid = ch.pdfId;
-  const pathch = path.join(__dirname, '/root/mtpc/GR/');
+  const pathch = path.join('/root/mtpc/GR/');
   res.sendFile(chid, { root: pathch })
 
 });
