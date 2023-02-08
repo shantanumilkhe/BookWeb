@@ -25,21 +25,21 @@ router.post('/login', async (req, res) => {
         if (!username || !password) {
             return res.status(422).send({ message: "Please fill the data" });
         }
-        if(username != process.env.USER)
+        if(username != 'tpcadmin')
         {
             return res.status(422).send({ message: "Invalid Username" });
         }
-        if(password != process.env.PASSWORD)
+        if(password != 'tpcadmin@123')
         {
             return res.status(422).send({ message: "Invalid Credentials" });
         }
-        if (username ==process.env.USER && password == process.env.PASSWORD) {
+        if (username =='tpcadmin' && password == 'tpcadmin@123') {
 
             const payload = {
                 id: username
             }
 
-            const token = jwt.sign(payload, process.env.SECRET_KEY, { expiresIn: "1d" })
+            const token = jwt.sign(payload,'PROJECTFORBOOKWEBANDTPC', { expiresIn: "1d" })
             res.status(200).send({
                 success: true,
                 message: "Logged in successfully!",

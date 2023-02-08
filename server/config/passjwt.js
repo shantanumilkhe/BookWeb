@@ -4,7 +4,7 @@ const opts = {}
 const passport = require('passport')
 
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
-opts.secretOrKey = process.env.SECRET_KEY;
+opts.secretOrKey = 'PROJECTFORBOOKWEBANDTPC';
 opts.passReqToCallback= true;
 
 passport.use(new JwtStrategy(opts, function (req,jwt_payload, done) {
