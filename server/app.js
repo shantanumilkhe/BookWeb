@@ -37,10 +37,10 @@ db.once("open", () => {
 
 const app = express();
 app.use(cors());
-// app.use('/static', express.static('static'));
+app.use('/static', express.static('static'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(express.static(path.join(__dirname, "..", "client", "build")));
+app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
 const secret = 'thisASecret';
 const store = new MongoDBStore({
@@ -84,9 +84,9 @@ app.use('/auth', auth)
 app.use('/gr', gr)
 app.use('/sr', service)
 
-// app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
-// })
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
+})
 
 app.listen((5000),()=>{
     console.log('Server running on port: 5000')
