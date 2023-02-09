@@ -20,6 +20,7 @@ const upload = multer({
 });
 
 router.post('/upload', upload.single("document"), (req, res) => {
+  console.log("Now uploading GR")
   console.log(req.body)
   const index = (req.body.index);
 
