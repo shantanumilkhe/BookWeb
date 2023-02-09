@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import '../../css/uploader.css'
+import axios from 'axios';
 
 const Uploader = () => {
   const [info, setInfo] = useState({ name: null, number: null })
