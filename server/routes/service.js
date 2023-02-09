@@ -9,6 +9,7 @@ const { cloudinary, storage } = require('../config/cloudinary')
 
 
 router.get('/allservices', (req, res) => {
+    try{
     service.find({}, (err, files) => {
         if (err) return res.status(500).send({ error: err });
         const filesData = files.map(file => {
@@ -23,12 +24,16 @@ router.get('/allservices', (req, res) => {
        console.log(filesData);
         res.status(200).send({ files: filesData });
     });
+}catch(e){
+    console.log(e)
+  }
 })
 
 const upload = multer({ storage });
 
 router.post('/addservice', upload.any('images'), async (req, res) => {
     try {
+        console.log(req.body);
         const newService = new service({
             name: req.body.name,
             description: req.body.description,

@@ -20,6 +20,7 @@ const upload = multer({
 });
 
 router.post('/upload', upload.single("document"), (req, res) => {
+  try{
   console.log("Now uploading GR")
   console.log(req.body)
   const index = (req.body.index);
@@ -44,9 +45,15 @@ router.post('/upload', upload.single("document"), (req, res) => {
   // save the new file object to the database
   newFile.save()
 
+  res.status(200).send("new GR Uploaded")
+}catch(err){
+  console.log(err)
+}
+
 });
 
 router.get('/allgrID', (req, res) => {
+  try{
   gr.find({}, (err, files) => {
     if (err) return res.status(500).send({ error: err });
     const filesData = files.map(file => {
@@ -58,6 +65,9 @@ router.get('/allgrID', (req, res) => {
     });
     res.status(200).send({ files: filesData });
   });
+}catch(e){
+  console.log(e)
+}
 });
 
 router.get('/getGRData/:id', async (req, res) => {
@@ -70,24 +80,28 @@ router.get('/getGRData/:id', async (req, res) => {
 })
 
 router.get('/:id', async (req, res) => {
+  try{
   console.log(req.params.id);
   const ch = await gr.findOne({ _id: req.params.id });
   const chid = ch.pdfId;
   const pathch = path.join('/root/mtpc/GR/');
   res.sendFile(chid, { root: pathch })
+}catch(e){
+  console.log(e)
+}
 
 });
 
 router.delete('/deletegr/:id', async (req, res) => {
+  try{
   console.log(req.params.id);
   const id = req.params.id;
   console.log(id)
   const ch1 = await gr.findOne({ _id: id });
   const chid = ch1.pdfId;
   console.log(chid)
-
   const pathch = path.join('/root/mtpc/GR/', chid);
-
+  
   fs.unlink(pathch, (err) => {
     if (err) {
       res.status(500).send({ error: 'Error deleting file' });
@@ -106,13 +120,16 @@ router.delete('/deletegr/:id', async (req, res) => {
       console.log('Error in Deleting Chapter : ' + JSON.stringify(err, undefined, 2));
     }
   });
+
+}catch(e){
+  console.log(e)
+}
 });
 
 router.post('/updategr/:id', upload.single("documente"), async (req, res) => {
+  try{
   console.log(req.body);
   console.log(req.file);
-
-  
   let chide = req.body.pdfId;
   console.log(chide)
   const name = req.body.title;
@@ -140,7 +157,9 @@ router.post('/updategr/:id', upload.single("documente"), async (req, res) => {
     type: file.mimetype,
   }, { new: true });
   res.status(200);
-
+}catch(e){
+  console.log(e)
+}
 });
 
 

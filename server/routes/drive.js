@@ -20,6 +20,7 @@ const upload = multer({
 
 
 router.post('/upload', upload.single('document'), (req, res) => {
+  try{
   console.log(req.body)
   const index = (req.body.index);
   const newi = index.split('\n');
@@ -49,18 +50,26 @@ router.post('/upload', upload.single('document'), (req, res) => {
   });
   // save the new file object to the database
   newFile.save()
+}catch(e){
+  console.log(e)
+}
 });
 
 router.get('/:id', async (req, res) => {
+  try{
   console.log(req.params.id);
   const ch = await chapter.findOne({ _id: req.params.id });
   const chid = ch.pdfId;
   const pathch = path.join('/root/mtpc/Chapters/');
   res.sendFile(chid, { root: pathch });
+}catch(e){
+  console.log(e)
+}
 });
 
 
 router.delete('/deleteChapter/:id', async (req, res) => {
+  try{
   console.log(req.params.id);
   const id = req.params.id;
   console.log(id)
@@ -89,10 +98,14 @@ console.log(pathch)
       console.log('Error in Deleting Chapter : ' + JSON.stringify(err, undefined, 2));
     }
   });
+}catch(e){
+  console.log(e)
+}
 })
 
 
 router.post('/updateChapter/:id', upload.single("documente"), async (req, res) => {
+  try{
   console.log(req.body);
   console.log(req.file);
 
@@ -138,7 +151,9 @@ router.post('/updateChapter/:id', upload.single("documente"), async (req, res) =
       console.log('Error in Updating Chapter : ' + JSON.stringify(err, undefined, 2));
     }
   });
-
+}catch(e){
+  console.log(e)
+}
 
 })
 

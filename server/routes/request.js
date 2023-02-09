@@ -7,6 +7,7 @@ const path = require('path');
 const Chapter = require('../models/book');
 
 router.get('/allChapterID', (req, res) => {
+    try{
     Chapter.find({}, (err, files) => {
         if (err) return res.status(500).send({ error: err });
         const filesData = files.map(file => {
@@ -20,6 +21,9 @@ router.get('/allChapterID', (req, res) => {
         });
         res.status(200).send({ files: filesData });
     });
+}catch(e){
+    console.log(e)
+  }
 });
 
 router.get('/ChapterData/:id', async (req, res) => {
@@ -30,11 +34,6 @@ router.get('/ChapterData/:id', async (req, res) => {
         console.log(error);
     }
 });
-
-
-
-
-
 
 
 module.exports = router;

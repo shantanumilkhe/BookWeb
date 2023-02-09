@@ -33,10 +33,11 @@
 
 .para{
   width: 70%;
-    text-align: justify;
+    text-align: left;
     padding-left: 2rem;
     padding-right: 2rem;
     padding-bottom: 2rem;
+    font-weight: 400;
     font-size: 1.2rem;
     line-height: 1.5rem;
     color: #000;
