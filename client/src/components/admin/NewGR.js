@@ -12,6 +12,10 @@ const Uploader = () => {
     setPDF(file);
     setPdfFile(url);
   };
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+});
+
 
   let name, value;
 
@@ -31,10 +35,13 @@ const Uploader = () => {
     formData.append("title", info.name);
 
 
-    await fetch(`${process.env.REACT_APP_API_URL}/gr/upload`, {
-      method: 'POST',
-      body: formData,
-    })
+    // await fetch(`${process.env.REACT_APP_API_URL}/gr/upload`, {
+    //   method: 'POST',
+    //   body: formData,
+    // })
+    //   .then((res) => setMessage('Success'))
+    //   .catch((err) => (setMessage(err.message)));
+    await axiosInstance.post('/gr/upload',  formData)
       .then((res) => setMessage('Success'))
       .catch((err) => (setMessage(err.message)));
 
