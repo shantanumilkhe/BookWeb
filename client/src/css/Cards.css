@@ -36,7 +36,7 @@
   display: flex;
   flex-flow: column;
   width: 100%;
-  box-shadow: 0 6px 20px rgba(56, 125, 255, 0.17);
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   -webkit-filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
   filter: drop-shadow(0 6px 20px rgba(56, 125, 255, 0.017));
   border-radius: 10px;
@@ -91,13 +91,17 @@
 
 .cards__item__info {
   padding: 20px 30px 30px;
+  
+ 
 }
 
 .cards__item__text {
   color: #252e48;
   font-size: 18px;
   line-height: 24px;
+  pointer-events: none;
 }
+
 
 @media only screen and (min-width: 1200px) {
   .content__blog__container {
@@ -112,7 +116,13 @@
 }
 
 @media only screen and (max-width: 1024px) {
+  .cards{
+    padding: 0;
+  }
   .cards__item {
     margin-bottom: 2rem;
+  }
+  .cards__item__text {
+   text-align: center;
   }
 }
