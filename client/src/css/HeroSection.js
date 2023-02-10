@@ -18,7 +18,7 @@ const pageOpen = (id) => {
 
   useEffect(() => {
     async function getGR() {
-      axiosInstance.get(`/get/latestgr`).then((res) => {console.log(res.data); setGR(res.data) }).catch(err => console.log(err));
+      axiosInstance.get(`/get/latestgr`).then((res) => {console.log(res.data); setGR(res.data)}).catch(err => console.log(err));
     }
     getGR();
   }, [])
@@ -50,12 +50,12 @@ const pageOpen = (id) => {
      
      {visible && <div className="element2" id="elementToHide">
       <h1 >Latest GR</h1>
-     { gr.map((gr) => {
+      { gr?gr.map((gr) => {
         return <div className="gr">
           <p onClick={() => pageOpen(gr._id)}>• {gr.name}</p>
         </div>
-      })
-     }
+      }):null
+     }
     </div>
 }
 
