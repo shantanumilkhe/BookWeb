@@ -38,9 +38,36 @@ db.once("open", () => {
 const app = express();
 app.use(cors());
 app.use('/static', express.static('static'));
-app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({limit:'50mb', extended: true }));
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
+
+const secret = 'thisASecret';
+const store = new MongoDBStore({
+    mongoUrl: Dburl,
+    secret,
+    touchAfter: 24*3600
+    })
+    
+    store.on("error", function(e){
+        console.log("session Store error", e)
+    })
+    
+    const sessionConfig = {
+        store,
+        name: 'session',
+        secret,
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            httpOnly: true,
+            // secure: true,
+            expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+        }
+    
+    }
+app.use(session(sessionConfig));
 
 
 
