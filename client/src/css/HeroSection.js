@@ -7,7 +7,7 @@ import axios from 'axios';
 
 function HeroSection() {
   let navigate = useNavigate();
-  const[gr, setGR] = useState([]);
+  const[gr, setGR] = useState(null);
   const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
 });
@@ -26,13 +26,7 @@ function HeroSection() {
      
      <div className="element2">
       <h1 >Latest GR</h1>
-      {gr.map((chp, idx) => {
-        return <div>
-       <p  onClick={() => navigate(`/viewerGR/${chp.id}`)}>{chp}</p>
-      </div>
-      })
-      }
-     </div>
+    </div>
      
       {/* <div className='hero-btns'>
         <Button

@@ -35,6 +35,7 @@ router.get('/ChapterData/:id', async (req, res) => {
 router.get('/latestgr', async (req, res) => {
     try {
         let gree = await gr.find({}).sort({$natural:-1}).limit(10);
+        console.log(gree)
         res.status(200).send(gree);
     } catch (error) {
         console.log(error);
