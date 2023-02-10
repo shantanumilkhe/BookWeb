@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const multer = require('multer');
-const { google } = require('googleapis');
-const fs = require('fs');
-const path = require('path');
 const Chapter = require('../models/book');
+const gr = require('../models/gr');
 
 router.get('/allChapterID', (req, res) => {
     try{
@@ -30,6 +27,15 @@ router.get('/ChapterData/:id', async (req, res) => {
     try {
         let chpt = await Chapter.findOne({ _id: req.params.id });
         res.status(200).send(chpt);
+    } catch (error) {
+        console.log(error);
+    }
+});
+
+router.get('/latestgr', async (req, res) => {
+    try {
+        let gree = await gr.find({}).sort({$natural:-1}).limit(1);
+        res.status(200).send(gree);
     } catch (error) {
         console.log(error);
     }

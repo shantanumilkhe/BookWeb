@@ -11,9 +11,12 @@ video {
   height: 100vh;
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: left;
+  justify-content: space-between;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+   flex-direction: center;
+  justify-content: row; 
+ 
   box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.2);
   object-fit: fill;
 }
@@ -22,22 +25,22 @@ img{
   object-fit: contain;
 }
 
-.hero-container > h1 {
+.element1 > h1 {
   margin-left:2%;
   color: #fff;
   font-size: 75px;
   margin-top: -100px;
-  display: flex;
-  flex-direction: row;
+  /* display: flex;
+  flex-direction: row; */
   text-shadow: 1px 1px 2px black;
- justify-content: left;
+ /* justify-content: left; */
 }
 
 .homePage{
   text-align: left;
 }
 
-.hero-container > p {
+.element1 > p {
   margin-left:2%;
   margin-top: 8px;
   color: #fff;
@@ -46,6 +49,17 @@ img{
     'Lucida Sans', Arial, sans-serif;
 }
 
+.element2{
+  height: 50vh;
+  width: 20%;
+  background-color: #fff;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  border-color: black;
+  border-style: solid;
+  border-width: 5px;
+  margin-top: -3rem;
+}
 .hero-btns {
   margin-left:2%;
   margin-top: 32px;
@@ -59,33 +73,28 @@ img{
   margin-left: 4px;
 }
 
-@media screen and (max-width: 960px) {
-  .hero-container > h1 {
-    font-size: 70px;
-    margin-top: -150px;
-    display: flex;
-    flex-direction: row;
-   justify-content: left;
-   margin-left:2%;
-  }
-}
+
 
 @media screen and (max-width: 768px) {
-  .hero-container > h1 {
-    font-size: 50px;
-    margin-top: -100px;
-    display: flex;
-    flex-direction: row;
-   justify-content: left;
-   margin-left:2%;
+  .hero-container {
+   justify-content: center;
+   padding-right: 1rem;
+   padding-left: 1rem;
+  }
+  
+  .element1 > h1 {
+    font-size: 40px;
+    margin-top: -200px;
+    text-align: center;
+   
+   width: 100%;
   }
 
-  .hero-container > p {
-    margin-left:2%;
+  .element1 > p {
     font-size: 30px;
-    display: flex;
-    flex-direction: row;
-    width: 70%;
+  text-align: center;
+    width: 100%;
+    margin-left: 0;
   }
 
   .btn-mobile {
