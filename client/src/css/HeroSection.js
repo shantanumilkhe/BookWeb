@@ -13,7 +13,7 @@ function HeroSection() {
 });
   useEffect(() => {
     async function getGR() {
-      axiosInstance.get(`/gr/latestgr`).then((res) => { setGR(res.data.files) }).catch(err => console.log(err));
+      axiosInstance.get(`/get/latestgr`).then((res) => { setGR(res.data.files) }).catch(err => console.log(err));
     }
     getGR();
   }, [])
