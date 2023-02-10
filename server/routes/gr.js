@@ -153,8 +153,6 @@ router.post('/updategr/:id', upload.single("documente"), async (req, res) => {
   const ch = await gr.findOneAndUpdate({ _id: req.params.id }, {
     pdfId: chide,
     name: name,
-    size: file.size,
-    type: file.mimetype,
   }, { new: true });
   res.status(200);
 }catch(e){

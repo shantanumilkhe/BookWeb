@@ -11,12 +11,36 @@ function HeroSection() {
   const axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
 });
+const pageOpen = (id) => {
+  let path = '/viewerGR/' + id;
+  navigate(path)
+}
+
   useEffect(() => {
     async function getGR() {
-      axiosInstance.get(`/get/latestgr`).then((res) => { setGR(res.data.files) }).catch(err => console.log(err));
+      axiosInstance.get(`/get/latestgr`).then((res) => {console.log(res.data); setGR(res.data) }).catch(err => console.log(err));
     }
     getGR();
   }, [])
+
+  const [width, setWidth] = useState(window.innerWidth);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (width < 800) {
+      setVisible(false);
+    } else {
+      setVisible(true);
+    }
+  }, [width]);
+
+ 
   return (
     <div className='hero-container'>
       {/* <video src='/videos/video-2.mp4' autoPlay loop muted /> */}
@@ -24,9 +48,17 @@ function HeroSection() {
       <div className="element1"> <h1 className='homePage'>Maha TP Consultant</h1>
       <p>Maharashtra Town Planning Consultant</p></div>
      
-     <div className="element2">
+     {visible && <div className="element2" id="elementToHide">
       <h1 >Latest GR</h1>
+     { gr.map((gr) => {
+        return <div className="gr">
+          <p onClick={() => pageOpen(gr._id)}>• {gr.name}</p>
+        </div>
+      })
+     }
     </div>
+}
+
      
       {/* <div className='hero-btns'>
         <Button
