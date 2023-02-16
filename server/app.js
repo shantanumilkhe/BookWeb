@@ -39,7 +39,7 @@ const app = express();
 app.use(cors());
 app.use('/static', express.static('static'));
 app.use(bodyParser.json({ limit: '50mb' }));
-app.use(bodyParser.urlencoded({limit:'50mb', extended: true }));
+app.use(bodyParser.urlencoded({limit:'50mb', extended: true, parameterLimit:50000}));
 app.use(express.static(path.join(__dirname, "..", "client", "build")));
 
 const secret = 'thisASecret';

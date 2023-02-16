@@ -2,9 +2,11 @@ import React,{useState} from 'react'
 import axios from 'axios';
 const Contactus = () => {
 
-    const [info, setInfo] = useState({ name: null,email:null, description: null })
+    const [info, setInfo] = useState({ name: null,email:null,phone:null, description: null })
     const [message,setMessage] = useState(null);
-  
+    const axiosInstance = axios.create({
+      baseURL: process.env.REACT_APP_API_URL,
+  });
     let name, value;
   
     const handleChange = (e) => {
@@ -16,9 +18,9 @@ const Contactus = () => {
     const handleSubmit = async (e) => {
       e.preventDefault()
         console.log(info);
-    //   await axios.post("/", info)
-    //   .then((res) => setMessage('Success'))
-    //   .catch((err) => (setMessage(err.message)));
+      await axiosInstance.post("/sr/generalcontact", info)
+      .then((res) => setMessage('Success'))
+      .catch((err) => (setMessage(err.message)));
     }
 
     return (
@@ -38,7 +40,13 @@ const Contactus = () => {
           <fieldset className='form-group'>
             <h4>Email:</h4>
     
-            <input id='formName' className='form-input' name='email' type='text' value={info.email} required onChange={handleChange} />
+            <input id='formName' className='form-input' name='email' type='email' value={info.email} required onChange={handleChange} />
+          </fieldset>
+
+          <fieldset className='form-group'>
+            <h4>number:</h4>
+    
+            <input id='formName' className='form-input' name='phone' type='number' value={info.phone} required onChange={handleChange} />
           </fieldset>
     
           <fieldset className='form-group'>

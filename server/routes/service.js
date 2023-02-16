@@ -6,6 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const service = require('../models/services');
 const { cloudinary, storage } = require('../config/cloudinary')
+const nodemailer = require('nodemailer');
 
 
 router.get('/allservices', (req, res) => {
@@ -84,5 +85,61 @@ router.put('/updateservice/:id', upload.array('images'), async (req, res) => {
         console.log(error);
     }
 });
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: 'bookweb729@gmail.com',
+      pass: 'eixtccdmneahgspd'
+    }
+  });
+  
+router.post('/generalcontact', async (req, res) => {
+    try {
+        console.log(req.body);
+        
+          const mailOptions = {
+            from: req.body.email,
+            to: 'bookweb729@gmail.com',
+            subject: 'Message from ' + req.body.name + '',
+            text: 'Name: ' + req.body.name+ "\n"+ 'Email: ' + req.body.email+ "\n" + 'Phone: ' + req.body.phone+ "\n" + ' Message: ' + req.body.description+ "\n" + '',
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+              res.sendStatus(200).send(info.response);
+            }
+          });  
+    } catch (error) {
+        console.log(error);
+    }
+})
+
+router.post('/servicecontact/:id', async (req, res) => {
+    try {
+        console.log(req.body);
+        
+          const mailOptions = {
+            from: req.body.email,
+            to: 'bookweb729@gmail.com',
+            subject:  'Consultancy request regarding ' + req.body.blogname+ " by " + req.body.info.name + '',
+            text: 'Name: ' + req.body.info.name+ "\n"+ 'Email: ' + req.body.info.email+ "\n" + 'Phone: ' + req.body.info.phone+ "\n" + ' Message: ' + req.body.info.description+ "\n" + '',
+          };
+          
+          transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+              res.sendStatus(200).send(info.response);
+            }
+          });  
+    } catch (error) {
+        console.log(error);
+    }
+})
 
 module.exports = router;

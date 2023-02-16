@@ -54,14 +54,14 @@ img{
   width: 36ch;
 
   background-color: rgba(255, 255, 255, 0.2);
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 
-  border-color: rgb(255, 255, 255);
-  backdrop-filter: blur(8px);
+  border-color: rgb(230, 230, 230);
+  backdrop-filter: blur(4px);
  border-right: none;
   border-style: solid;
-  
+  border-width: 1px;
   margin-top: -3rem;
 }
 
@@ -101,7 +101,8 @@ img{
 }
 .gr > p:hover {
  
-  background-color: #333333;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 .hero-btns {
