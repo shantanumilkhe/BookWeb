@@ -188,7 +188,7 @@ const Fetch = () => {
             borderBottom: '1px solid rgba(0, 0, 0, 0.1)',
             display: 'flex',
             justifyContent: 'center',
-            padding: '4px',
+            // padding: '2px',
             zIndex:'1',
           }}
         >

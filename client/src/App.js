@@ -21,11 +21,13 @@ import NewService from './components/admin/NewServices'
 import ServicesList from './components/ServicesList';
 import ServiceView from './components/serviceBlog';
 import Contactus from './components/Contactus';
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   return (
     <BrowserRouter>
     <Navbar/>
+    <ScrollToTop/>
     <Routes>
     <Route path="/" element={<Home />} />
     <Route path='/book' element={<Display/>}/>

@@ -26,7 +26,7 @@ function Footer() {
         </div>
       </section> */}
       <div class='footer-links'>
-        {/* <div className='footer-link-wrapper'>
+        <div className='footer-link-wrapper'>
           <div class='footer-link-items'>
             <h2>About Us</h2>
             <Link to='/sign-up'>How it works</Link>
@@ -42,8 +42,8 @@ function Footer() {
             <Link to='/'>Destinations</Link>
             <Link to='/'>Sponsorships</Link>
           </div>
-        </div> */}
-        {/* <div className='footer-link-wrapper'>
+        </div> 
+        <div className='footer-link-wrapper'>
           <div class='footer-link-items'>
             <h2>Videos</h2>
             <Link to='/'>Submit Video</Link>
@@ -58,7 +58,7 @@ function Footer() {
             <Link to='/'>Youtube</Link>
             <Link to='/'>Twitter</Link>
           </div>
-        </div> */}
+        </div>
       </div>
       <section class='social-media'>
         <div class='social-media-wrap'>
@@ -69,7 +69,7 @@ function Footer() {
             </Link>
           </div>
           <small class='website-rights'>MahaTPC © 2023</small>
-          {/* <div class='social-icons'>
+          <div class='social-icons'>
             <Link
               class='social-icon-link facebook'
               to='/'
@@ -110,7 +110,7 @@ function Footer() {
             >
               <i class='fab fa-linkedin' />
             </Link>
-          </div> */}
+          </div>
         </div>
       </section>
     </div>
