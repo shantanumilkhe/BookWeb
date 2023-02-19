@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Chapter = require('../models/book');
 const gr = require('../models/gr');
+const admin = require('../models/admin');
 
 router.get('/allChapterID', (req, res) => {
     try{
@@ -35,7 +36,10 @@ router.get('/ChapterData/:id', async (req, res) => {
 router.get('/latestgr', async (req, res) => {
     try {
         let gree = await gr.find({}).sort({$natural:-1}).limit(10);
-        console.log(gree)
+        const counter = await admin.findOne();
+        counter.liveCounter = counter.liveCounter + 1;
+        console.log("Number of hits: ",counter.liveCounter)
+        await counter.save();
         res.status(200).send(gree);
     } catch (error) {
         console.log(error);

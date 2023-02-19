@@ -3,6 +3,18 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import '../../css/Chapter.css'
 import '../../css/bookIndex.css'
+
+function romanize(num) {
+    var lookup = {M:1000,CM:900,D:500,CD:400,C:100,XC:90,L:50,XL:40,X:10,IX:9,V:5,IV:4,I:1},roman = '',i;
+    for ( i in lookup ) {
+      while ( num >= lookup[i] ) {
+        roman += i;
+        num -= lookup[i];
+      }
+    }
+    return roman;
+  }
+  
 const Chapters = () => {
     let navigate = useNavigate();
     const [chapters, setChapter] = useState([]);
@@ -44,7 +56,7 @@ const Chapters = () => {
                         return <div className="item">
                             <div className="title">
 
-                                <h2 onClick={() => toogle(idx)}>{chp.chapterNo}</h2>
+                                <h2 onClick={() => toogle(idx)}>{romanize(chp.chapterNo)}</h2>
                                 <h2 onClick={() => toogle(idx)}>{chp.name}</h2>
                                 <span onClick={() => toogle(idx)}>{selected == idx ? "-" : "+"}</span>
                             </div>

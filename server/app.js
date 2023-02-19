@@ -21,6 +21,7 @@ const cors = require('cors');
 const Dburl = process.env.DB_URL
 const requests = require('./routes/request');
 const bodyParser = require('body-parser');
+const countapi = require('countapi-js');
 
 mongoose.set('strictQuery', true);
 mongoose.connect(Dburl, {
@@ -87,6 +88,7 @@ app.use('/sr', service)
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"));
 })
+
 
 app.listen((5001),()=>{
     console.log('Server running on port: 5001')
