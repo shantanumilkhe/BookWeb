@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useParams,useNavigate } from 'react-router-dom'
+
 const ServicesEdit = () => {
   let id = useParams();
+  let navigate = useNavigate();
   const [info, setInfo] = useState({ name: null, description: null, serviceNo: null })
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState(null);
@@ -22,14 +24,13 @@ const ServicesEdit = () => {
     setInfo({ ...info, [name]: value })
   }
 
-  const handleDelete = async () => {
+  async function handleDelete () {
     await axios.delete('/sr/deleteservice/' + id.id)
       .then((res) => setMessage('Success'))
       .catch((err) => (setMessage(err.message)));
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  async function handleSubmit () {
     var FormData = require('form-data');
     var formData = new FormData();
     const axiosInstance = axios.create({
@@ -91,8 +92,8 @@ const ServicesEdit = () => {
         </div>
 
         <div className='form-group row'>
-          <input id='formButton' className='btn col' type='submit' placeholder='Send message' onClick={handleSubmit} />
-          <input id='formButton' className='btn col' type='text' value={"Delete"} placeholder='Delete' onClick={handleDelete} />
+          <input id='formButton' className='btn col' type='submit' placeholder='Send message' onClick={()=>{handleSubmit();navigate('/admin/services');}} />
+          <input id='formButton' className='btn col' type='button' value={"Delete"} placeholder='Delete' onClick={()=>{handleDelete();navigate('/admin/services');}} />
         </div>
       </form>
     </div>

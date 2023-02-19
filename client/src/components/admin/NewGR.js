@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../../css/uploader.css'
 import axios from 'axios';
 
 const Uploader = () => {
+  let navigate = useNavigate();
   const [info, setInfo] = useState({ name: null, number: null })
   const [pdf,setPDF] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
@@ -27,8 +29,7 @@ const Uploader = () => {
   }
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  async function handleSubmit () {
     var FormData = require('form-data');
     var formData = new FormData();
 
@@ -73,7 +74,7 @@ const Uploader = () => {
       </div>
 
       <div className='form-group'>
-        <input id='formButton' className='btn' type='submit' placeholder='Send message' onClick={handleSubmit} />
+        <input id='formButton' className='btn' type='submit' placeholder='Send message' onClick={()=>{handleSubmit();navigate('/admin/gr')}} />
       </div>
     </form>
     </div>

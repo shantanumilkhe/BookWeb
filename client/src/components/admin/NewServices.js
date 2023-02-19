@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 const NewServices = () => {
+  let navigate = useNavigate();
   const [info, setInfo] = useState({ name: null, description: null, serviceNo: null })
   const [image, setImage] = useState(null);
   const [message, setMessage] = useState(null);
@@ -17,8 +19,7 @@ const NewServices = () => {
   }
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  async function handleSubmit () {
     var FormData = require('form-data');
     var formData = new FormData();
 
@@ -65,7 +66,7 @@ const NewServices = () => {
         </div>
 
         <div className='form-group'>
-          <input id='formButton' className='btn' type='submit' placeholder='Send message' onClick={handleSubmit} />
+          <input id='formButton' className='btn' type='submit' placeholder='Send message' onClick={()=>{handleSubmit();navigate('/admin/services');}} />
         </div>
       </form>
     </div>

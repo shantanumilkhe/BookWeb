@@ -11,7 +11,9 @@ function Navbar() {
   const [admin, setAdmin] = useState(false);
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
-
+  const axiosInstance = axios.create({
+    baseURL: process.env.REACT_APP_API_URL,
+  });
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
@@ -21,7 +23,7 @@ function Navbar() {
   };
   const authenticateAdmin = async () => {
     let token = localStorage.getItem('token');
-    await axios.get('/auth/authenticate', { headers: { Authorization: token } }).then(res => {
+    await axiosInstance.get('/auth/authenticate', { headers: { Authorization: token } }).then(res => {
       if (res.data.success == true) { setAdmin(true) }
     })
   }

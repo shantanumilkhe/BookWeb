@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams,useNavigate } from 'react-router-dom'
 import '../../css/uploader.css'
 
 const BookEdit = () => {
   let id = useParams();
+  let navigate = useNavigate();
   const [message, setMessage] = useState(null);
   const [info, setInfo] = useState({ name: null,number:null, index: null })
   const [pdf, setPDF] = useState(null);
@@ -27,8 +28,7 @@ const BookEdit = () => {
     setInfo({ ...info, [name]: value })
   }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  async function handleSubmit () {
     var FormData = require('form-data');
     var formData = new FormData();
 
@@ -43,15 +43,15 @@ const BookEdit = () => {
       method: 'POST',
       body: formData,
     })
-      .then((res) => setMessage('Success'))
-      .catch((err) => (setMessage(err.message)));
+      .then((res) => {setMessage('Success')})
+      .catch((err) => {setMessage(err.message)});
   }
 
-  const handleDelete = async () => {
+  async function handleDelete() {
     console.log(id)
     await axiosInstance.delete('/drive/deleteChapter/' + id.id)
-      .then((res) => setMessage('Success'))
-      .catch((err) => (setMessage(err.message)));
+      .then((res) => {setMessage('Success')})
+      .catch((err) => {setMessage(err.message)});
   }
   useEffect(() => {
   
@@ -100,8 +100,8 @@ const BookEdit = () => {
         </div>
 
         <div className='form-group row'>
-          <input id='formButton' className='btn col' type='submit' value={"Update"} placeholder='Send message' onClick={handleSubmit} />
-          <input id='formButton' className='btn col' type='text' value={"Delete"} placeholder='Delete' onClick={handleDelete} />
+          <input id='formButton' className='btn col' type='submit' value={"Update"} placeholder='Send message' onClick={()=>{handleSubmit();navigate('/admin/book');}} />
+          <input id='formButton' className='btn col' type='button' value={"Delete"} placeholder='Delete' onClick={()=>{handleDelete();navigate('/admin/book');}} />
         </div>
       </form>
     </div>

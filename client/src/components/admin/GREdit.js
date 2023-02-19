@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams,useNavigate } from 'react-router-dom'
 import '../../css/uploader.css'
 
 const GREdit = () => {
     let id = useParams();
+    let navigate = useNavigate();
   const [info, setInfo] = useState({ name: null, number: null })
   const [pdf,setPDF] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
@@ -29,8 +30,7 @@ const GREdit = () => {
   }
 
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
+  async function handleSubmit () {
     var FormData = require('form-data');
     var formData = new FormData();
 
@@ -43,12 +43,11 @@ const GREdit = () => {
       method: 'POST',
       body: formData,
     })
-    .then((res) => setMessage('Success'))
-    .catch((err) => (setMessage(err.message)));
-
+    .then((res) => {setMessage('Success')})
+    .catch((err) => {setMessage(err.message)});
   }
 
-  const handleDelete = async ()=>{
+  async function handleDelete (){
     await axiosInstance.delete('/gr/deletegr/'+id.id)
     .then((res) => setMessage('Success'))
     .catch((err) => (setMessage(err.message)));
@@ -90,8 +89,8 @@ const GREdit = () => {
       </div>
 
       <div className='form-group row'>
-        <input id='formButton' className='btn col' type='submit' placeholder='Send message' onClick={handleSubmit} />
-        <input id='formButton' className='btn col' type='delete' placeholder='Delete' onClick={handleDelete} />
+        <input id='formButton' className='btn col' type='submit' placeholder='Send message' onClick={()=>{handleSubmit();navigate('/admin/gr');}} />
+        <input id='formButton' className='btn col' type='button' value={'Delete'} placeholder='Delete' onClick={()=>{handleDelete();navigate('/admin/gr');}} />
       </div>
     </form>
     </div>
