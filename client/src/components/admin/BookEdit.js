@@ -7,7 +7,7 @@ const BookEdit = () => {
   let id = useParams();
   let navigate = useNavigate();
   const [message, setMessage] = useState(null);
-  const [info, setInfo] = useState({ name: null,number:null, index: null })
+  const [info, setInfo] = useState({ name: null,number:null, index: [] })
   const [pdf, setPDF] = useState(null);
   const [pdfid, setpdfid] = useState(null);
   const [pdfFile, setPdfFile] = useState(null);
@@ -57,7 +57,7 @@ const BookEdit = () => {
   
     async function getDetails() {
       await axiosInstance.get('/get/ChapterData/' + id.id).then(res => {
-        setInfo({ name: res.data.name, number: res.data.chapterNo,index:res.data.chapterIndex });
+        setInfo({ name: res.data.name, number: res.data.chapterNo,index: res.data.chapterIndex });
         setpdfid(res.data.pdfId);
       }).catch(err => console.log(err))
     }

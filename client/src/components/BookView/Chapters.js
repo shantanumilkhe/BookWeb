@@ -61,11 +61,11 @@ const Chapters = () => {
                                 <h2 onClick={() => toogle(idx)}>{chp.name}</h2>
                                 <span onClick={() => toogle(idx)}>{selected == idx ? "-" : "+"}</span>
                             </div>
-                            <div className={selected == idx ? 'content show' : "content"}><button className="seeMore" onClick={() => pageOpen(chp.id)}>Read</button>
+                            <div className={selected == idx ? 'content show' : "content"}>
+                                <div className='reading'>  <button className="seeMore" onClick={() => pageOpen(chp.id)}>Read this Chapter</button></div>
+                               
                             {chp.chapterIndex.map((chpIdx, idx) => {
-                                return <div>
-                                    {chpIdx}
-                                </div>
+                                return <p className='indexes'> {chpIdx}</p>
                             })}
                             </div>
                         </div>

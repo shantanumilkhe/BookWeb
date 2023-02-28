@@ -91,22 +91,32 @@ body {
 }
 
 .seeMore {
-	margin: 10px ;
-	display: block;
-	align-items: center;
-	
-	justify-content: center;
-	width: 80px;
-	height: 25px;
-	background: hsl(0, 0%, 100%);
-	color: rgb(0, 0, 0);
+	padding: 6px 20px;
+	background-color: #edede9; 
+	display: inline-block;
+	padding: 12px 24px;
 	border: none;
-	border-radius: 5px;
+	color:black;
 	font-size: 16px;
-	font-weight: 600;
+	border-radius: 4px;
+	transition: background-color 0.3s ease in-out;
+}
+
+.indexes{
+	margin-bottom: 0.4rem;
+}
+
+.seeMore:hover {
+	background-color: white;
 	cursor: pointer;
-	box-shadow: 0 10px 10px hsl(225, 100%, 94%);
-	
+	transform: scale(1.05);
+	box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.reading{
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 @media screen and (max-width: 1024px) {
@@ -117,6 +127,9 @@ body {
 }
 
 @media screen and (max-width: 768px) {
+	.indexes{
+		font-size: 1rem;
+	}
 	.container .card_item {
 		width: 50%;
 	}
