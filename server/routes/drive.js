@@ -111,7 +111,7 @@ router.post('/updateChapter/:id', upload.single("documente"), async (req, res) =
 
   const index = (req.body.index);
   let newi = index.split('\n');
-  newi = newi.replace(',', '');
+  newi = newi.map(item => item.replace(',', ''));
 
   let chide = req.body.pdfId;
   console.log(chide)
