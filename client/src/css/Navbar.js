@@ -64,7 +64,7 @@ function Navbar() {
                 className='nav-links'
                 onClick={() => { setClick(false); navigate('/book'); }}
               >
-                Book
+                UDCPR
               </div>
             </div>
             <div className='nav-item'>

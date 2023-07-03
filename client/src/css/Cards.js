@@ -11,8 +11,8 @@ function Cards() {
           <ul className='cards__items'>
             <CardItem
               src='images/2.png'
-              text='UDPCR Book all chapters'
-              label='Book'
+              text='Most Recent UDCPR'
+              label='UDCPR'
               path='/book'
             />
             <CardItem
@@ -29,12 +29,12 @@ function Cards() {
               label='Services'
               path='/services'
             />
-            <CardItem
+            {/* <CardItem
               src='images/interview.jpg'
               text='Mock Interviews and Interview Tips'
               label='Interview'
               path='/products'
-            />
+            /> */}
             
           </ul>
         </div>
